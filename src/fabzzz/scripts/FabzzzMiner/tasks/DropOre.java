@@ -3,7 +3,7 @@ import org.powbot.api.Condition;
 import org.powbot.api.Random;
 import org.powbot.api.rt4.*;
 
-public class Powermine extends Task{
+public class DropOre extends Task{
     @Override
     public boolean activate() {
         System.out.println("Powermine -> activate");

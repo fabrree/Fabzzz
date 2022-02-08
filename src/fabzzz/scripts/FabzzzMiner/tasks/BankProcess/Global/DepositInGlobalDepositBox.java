@@ -4,7 +4,7 @@ import fabzzz.scripts.FabzzzMiner.tasks.Task;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 
-public class DepositDepositBoxGLOBAL extends Task
+public class DepositInGlobalDepositBox extends Task
 {
     @Override
     public boolean activate()

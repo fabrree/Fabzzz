@@ -1,6 +1,5 @@
 package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.BestPickaxe;
 
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.BestPickaxe.PickaxeObjWithRequirements;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 import org.powbot.api.rt4.walking.model.Skill;
@@ -10,15 +9,15 @@ import java.util.List;
 
 public class UseBestPickaxe
 {
-    private static List<PickaxeObjWithRequirements> PICKAXES_WITH_ALL_INFO = new ArrayList<>(){{
-    add(new PickaxeObjWithRequirements("Dragon pickaxe", 11920, 61, 60));
-    add(new PickaxeObjWithRequirements("Rune pickaxe", 1275, 41, 40));
-    add(new PickaxeObjWithRequirements("Adamant pickaxe", 1271, 31, 30));
-    add(new PickaxeObjWithRequirements("Mithril pickaxe", 1273, 21, 20));
-    add(new PickaxeObjWithRequirements("Black pickaxe", 12297, 11, 10));
-    add(new PickaxeObjWithRequirements("Steel pickaxe", 1269, 5, 5));
-    add(new PickaxeObjWithRequirements("Iron pickaxe", 1267, 1, 1));
-    add(new PickaxeObjWithRequirements("Bronze pickaxe", 1265, 1, 1));
+    private static List<PickaxeModel> PICKAXES_WITH_ALL_INFO = new ArrayList<>(){{
+    add(new PickaxeModel("Dragon pickaxe", 11920, 61, 60));
+    add(new PickaxeModel("Rune pickaxe", 1275, 41, 40));
+    add(new PickaxeModel("Adamant pickaxe", 1271, 31, 30));
+    add(new PickaxeModel("Mithril pickaxe", 1273, 21, 20));
+    add(new PickaxeModel("Black pickaxe", 12297, 11, 10));
+    add(new PickaxeModel("Steel pickaxe", 1269, 5, 5));
+    add(new PickaxeModel("Iron pickaxe", 1267, 1, 1));
+    add(new PickaxeModel("Bronze pickaxe", 1265, 1, 1));
     }};
 
 
@@ -27,7 +26,7 @@ public class UseBestPickaxe
         var currentMiningLevel = Skill.Mining.realLevel();
         var currentAttackLevel = Skill.Attack.realLevel();
         int currentPickaxeId;
-        PickaxeObjWithRequirements currentlyUsedPickaxe;
+        PickaxeModel currentlyUsedPickaxe;
 
         System.out.println("get current equipped/in inventory pickaxe");
         currentPickaxeId = getCurrentPickaxeInInvenOrEquip();
@@ -40,7 +39,7 @@ public class UseBestPickaxe
     }
 
 
-    private static void CheckForBetterPickaxeInBank(int currentMiningLevel, int currentAttackLevel, PickaxeObjWithRequirements currentlyUsedPickaxe)
+    private static void CheckForBetterPickaxeInBank(int currentMiningLevel, int currentAttackLevel, PickaxeModel currentlyUsedPickaxe)
     {
         for (var i : PICKAXES_WITH_ALL_INFO)
         {
@@ -88,7 +87,7 @@ public class UseBestPickaxe
         }
     }
 
-    private static PickaxeObjWithRequirements currentPickaxeToObject(int currentPickaxeId)
+    private static PickaxeModel currentPickaxeToObject(int currentPickaxeId)
     {
         System.out.println("set current pickaxe to object");
         for (var i: PICKAXES_WITH_ALL_INFO)

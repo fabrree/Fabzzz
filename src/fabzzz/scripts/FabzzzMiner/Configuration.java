@@ -1,6 +1,6 @@
 package fabzzz.scripts.FabzzzMiner;
 
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToBank;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToSelectedBank;
 import fabzzz.scripts.FabzzzMiner.tasks.MineOre;
 import org.powbot.api.Area;
 import org.powbot.api.Tile;
@@ -19,15 +19,15 @@ public class Configuration {
     public static void SelectBank(String bankName){
         System.out.println("SelectBank() = " + bankName);
         if (bankName.equals("Mining guild"))
-            WalkToBank.BANK = BANK_MINING_GUILD;
+            WalkToSelectedBank.BANK = BANK_MINING_GUILD;
         if (bankName.equals("Varrock east"))
-            WalkToBank.BANK = BANK_VARROCK_EAST;
+            WalkToSelectedBank.BANK = BANK_VARROCK_EAST;
         if (bankName.equals("Varrock west"))
-            WalkToBank.BANK = BANK_VARROCK_WEST;
+            WalkToSelectedBank.BANK = BANK_VARROCK_WEST;
         if (bankName.equals("Al Kharid"))
-            WalkToBank.BANK = BANK_AL_KHARID;
+            WalkToSelectedBank.BANK = BANK_AL_KHARID;
         if (bankName.equals("Draynor"))
-            WalkToBank.BANK = BANK_DRAYNOR;
+            WalkToSelectedBank.BANK = BANK_DRAYNOR;
     }
 
     // select ore configuration

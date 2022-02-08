@@ -4,7 +4,7 @@ import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 
 
-public class WalkToDepositBoxGLOBAL extends Task {
+public class WalkToGlobalDespositBox extends Task {
 
     @Override
     public boolean activate() {

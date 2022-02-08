@@ -78,7 +78,7 @@ public class FabTutorialIsland extends AbstractScript
 
 
         tasklist.add(new SetUsername());
-        tasklist.add(new setAppearance());
+        tasklist.add(new SetAppearance());
         tasklist.add(new TalkToFirstInstructor());
         tasklist.add(new Fishing());
         tasklist.add(new GoInsideCookingBuilding());

@@ -5,7 +5,7 @@ import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 
 
-public class WalkToBank extends Task {
+public class WalkToSelectedBank extends Task {
     public static Area BANK;
 
     @Override

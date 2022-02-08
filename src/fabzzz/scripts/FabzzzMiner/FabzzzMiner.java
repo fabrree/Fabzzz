@@ -1,23 +1,18 @@
 package fabzzz.scripts.FabzzzMiner;
-import com.google.common.eventbus.Subscribe;
 import fabzzz.scripts.FabzzzMiner.tasks.*;
 import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.*;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositDepositBoxGLOBAL;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositGLOBAL;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.WalkToBankGLOBAL;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.WalkToDepositBoxGLOBAL;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.Deposit;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToBank;
-import org.powbot.api.Color;
-import org.powbot.api.event.RenderEvent;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositInGlobalDepositBox;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositInGlobalBank;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.WalkToGlobalBank;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.WalkToGlobalDespositBox;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.DepositSelectedBank;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToSelectedBank;
 import org.powbot.api.rt4.*;
 import org.powbot.api.rt4.walking.model.Skill;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
-import org.powbot.api.script.paint.TrackInventoryOption;
 import org.powbot.api.script.paint.TrackSkillOption;
-import org.powbot.mobile.drawing.Graphics;
 import org.powbot.mobile.service.ScriptUploader;
 import static fabzzz.scripts.FabzzzMiner.Configuration.*;
 
@@ -149,33 +144,36 @@ public class FabzzzMiner extends AbstractScript {
         SelectOreToMine(oreToMine);
         //configurations end
 
+
+        if(!useBanking)
+        {
+            System.out.println("Tasklist no banking selected -> powermine");
+            tasklist.add(new DropOre());
+        }
+
         tasklist.add(new MineOre());
+
         if(useDepositBox)
         {
             System.out.println("Tasklist adding useDepositBox");
-            tasklist.add(new WalkToDepositBoxGLOBAL());
-            tasklist.add(new DepositDepositBoxGLOBAL());
-            tasklist.add(new WalkToMiningSpot());
+            tasklist.add(new WalkToGlobalDespositBox());
+            tasklist.add(new DepositInGlobalDepositBox());
+            tasklist.add(new WalkBackToMiningSpot());
         }
-        if(useBanking)
+        else if(useBanking)
         {
             System.out.println("Tasklist adding useBanking");
             if(bankName.equals("Bank (Automatic closest)"))
             {
-                tasklist.add(new WalkToBankGLOBAL());
-                tasklist.add(new DepositGLOBAL());
+                tasklist.add(new WalkToGlobalBank());
+                tasklist.add(new DepositInGlobalBank());
             }
             else
             {
-                tasklist.add(new WalkToBank());
-                tasklist.add(new Deposit());
+                tasklist.add(new WalkToSelectedBank());
+                tasklist.add(new DepositSelectedBank());
             }
-            tasklist.add(new WalkToMiningSpot());
-        }
-        else
-        {
-            System.out.println("Tasklist adding else -> powermine");
-            tasklist.add(new Powermine());
+            tasklist.add(new WalkBackToMiningSpot());
         }
 
         System.out.println("onStart() -> finished");

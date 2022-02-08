@@ -9,7 +9,7 @@ import org.powbot.api.rt4.Players;
 
 import static fabzzz.scripts.FabzzzMiner.Configuration.USE_BEST_PICKAXE_BANK;
 
-public class DepositGLOBAL extends Task
+public class DepositInGlobalBank extends Task
 {
     @Override
     public boolean activate()

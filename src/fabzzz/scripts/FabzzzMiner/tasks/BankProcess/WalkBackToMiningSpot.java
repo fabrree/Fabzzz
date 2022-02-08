@@ -5,7 +5,7 @@ import org.powbot.api.rt4.*;
 
 import static fabzzz.scripts.FabzzzMiner.Configuration.*;
 
-public class WalkToMiningSpot extends Task {
+public class WalkBackToMiningSpot extends Task {
     @Override
     public boolean activate()
     {

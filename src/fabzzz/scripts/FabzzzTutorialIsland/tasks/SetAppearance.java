@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class setAppearance extends Task
+public class SetAppearance extends Task
 {
     static boolean icandothis = true;
     private static boolean IS_FEMALE;

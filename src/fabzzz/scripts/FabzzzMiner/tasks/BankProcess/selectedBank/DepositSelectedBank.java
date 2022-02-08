@@ -5,9 +5,9 @@ import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 
 import static fabzzz.scripts.FabzzzMiner.Configuration.USE_BEST_PICKAXE_BANK;
-import static fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToBank.BANK;
+import static fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToSelectedBank.BANK;
 
-public class Deposit extends Task
+public class DepositSelectedBank extends Task
 {
     @Override
     public boolean activate()
