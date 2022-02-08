@@ -3,8 +3,8 @@ package fabzzz.scripts.FabzzzTutorialIsland;
 public class CharacterDesign
 {
 
-    private String name;
-    private int arrowRight;
+    private final String name;
+    private final int arrowRight;
 
     public CharacterDesign(String name, int arrowRight)
     {

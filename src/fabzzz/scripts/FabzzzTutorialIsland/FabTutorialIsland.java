@@ -47,7 +47,7 @@ import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.USERNAME;
 
 public class FabTutorialIsland extends AbstractScript
 {
-    private ArrayList<Task> tasklist = new ArrayList<>();
+    private final ArrayList<Task> tasklist = new ArrayList<>();
         public static void main(String[] args) {
             new ScriptUploader().uploadAndStart("FAB Tutorial island", "Freek", "127.0.0.1:5585", true, false);
         }

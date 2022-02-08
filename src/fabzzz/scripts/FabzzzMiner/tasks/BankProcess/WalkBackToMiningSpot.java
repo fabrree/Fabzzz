@@ -10,7 +10,7 @@ public class WalkBackToMiningSpot extends Task {
     public boolean activate()
     {
         System.out.println("WalkToMiningSpot -> activate");
-        return !Inventory.isFull();
+        return !Inventory.isFull() && !STARTING_TILE.equals(Players.local().tile()) ;
     }
 
     @Override

@@ -22,9 +22,7 @@ public class Configurations
     }
     public static boolean ChatContains(String text)
     {
-        if(Components.stream().widget(TEXT_SCREEN).textContains(text).isNotEmpty())
-            return true;
-        return false;
+        return Components.stream().widget(TEXT_SCREEN).textContains(text).isNotEmpty();
     }
     public static void TalkToNpc(String npcName)
     {

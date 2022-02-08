@@ -21,7 +21,7 @@ public class WalkToSelectedBank extends Task {
         if(Condition.wait(() -> Players.local().inMotion(), 50, 20))
         {
             System.out.println("WalkToBank() -> execute -> inside if");
-            Condition.wait(() -> !Players.local().inMotion(), 150, 40);
+            Condition.wait(() -> !Players.local().inMotion(), 200, 100);
         }
     }
 

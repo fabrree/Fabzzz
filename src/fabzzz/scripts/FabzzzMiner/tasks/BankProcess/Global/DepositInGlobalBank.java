@@ -1,12 +1,13 @@
 package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global;
 
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Pickaxe.Pickaxe;
 import fabzzz.scripts.FabzzzMiner.tasks.Task;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.BestPickaxe.UseBestPickaxe;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.Bank;
 import org.powbot.api.rt4.Inventory;
 import org.powbot.api.rt4.Players;
 
+import static fabzzz.scripts.FabzzzMiner.Configuration.TurnCamera;
 import static fabzzz.scripts.FabzzzMiner.Configuration.USE_BEST_PICKAXE_BANK;
 
 public class DepositInGlobalBank extends Task
@@ -24,12 +25,22 @@ public class DepositInGlobalBank extends Task
 
         System.out.println("Deposit -> execute -> Found bank");
         if (Bank.inViewport())
+        {
             Condition.wait(() -> Bank.open(), 50, 10);
+        }
+        else
+        {
+            System.out.println("Depositbox not in viewport... turning camera");
+            TurnCamera();
+        }
+
         if (Bank.opened())
         {
             Bank.depositAllExcept(Inventory.stream().filtered(x -> x.name().contains("pick")).first().name());
             if(USE_BEST_PICKAXE_BANK)
-                UseBestPickaxe.GetItNow();
+            {
+                Pickaxe.CheckForBetterPickaxe();
+            }
             Bank.close();
         }
     }

@@ -92,7 +92,7 @@ import java.util.ArrayList;
 )
 
 public class FabzzzMiner extends AbstractScript {
-    private ArrayList<Task> tasklist = new ArrayList<>();
+    private final ArrayList<Task> tasklist = new ArrayList<>();
     public static void main(String[] args)
     {
         new ScriptUploader().uploadAndStart("Fabzzz Miner", "Freek", "127.0.0.1:5585", true, false);
@@ -129,6 +129,7 @@ public class FabzzzMiner extends AbstractScript {
         PaintUI();
 
         String oreToMine = getOption("Ore");
+        Boolean useBankOrDepositbox = getOption("Use banking or deposit box");
         Boolean useBanking = getOption("Use banking");
         Boolean useDepositBox = getOption("Use depositbox (automatically closest)");
         Boolean useBestPickaxeBank = getOption("Auto upgrade bank");
@@ -144,14 +145,13 @@ public class FabzzzMiner extends AbstractScript {
         SelectOreToMine(oreToMine);
         //configurations end
 
+        tasklist.add(new MineOre());
 
-        if(!useBanking)
+        if(!useBankOrDepositbox)
         {
             System.out.println("Tasklist no banking selected -> powermine");
             tasklist.add(new DropOre());
         }
-
-        tasklist.add(new MineOre());
 
         if(useDepositBox)
         {
