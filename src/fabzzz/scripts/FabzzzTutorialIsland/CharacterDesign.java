@@ -15,8 +15,8 @@ public enum CharacterDesign
     FEET_COLOUR("FeetColour", 56),
     SKIN_COLOUR("SkinColour", 60);
 
-    public final String name;
-    public final int arrowRight;
+    private final String name;
+    private final int arrowRight;
 
     CharacterDesign(String name, int arrowRight)
     {

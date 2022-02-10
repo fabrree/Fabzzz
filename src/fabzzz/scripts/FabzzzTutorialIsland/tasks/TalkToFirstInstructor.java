@@ -32,16 +32,13 @@ public class TalkToFirstInstructor extends Task
             }
             ContinueChat();
         }
-
-
-        if(Condition.wait(() -> ChatContains("Please tap on the flashing spanner icon found on the right side of your screen"), 100, 10))
+        else if(Condition.wait(() -> ChatContains("Please tap on the flashing spanner icon found on the right side of your screen"), 100, 10))
         {
             System.out.println("In settings menu text");
-            Condition.wait(() -> Game.tab(Game.Tab.SETTINGS), 25, 40);
-            Condition.wait(() -> Game.tab() == Game.Tab.SETTINGS, 100, 20);
+            Game.tab(Game.Tab.SETTINGS);
+            Condition.wait(() -> Game.tab() == Game.Tab.SETTINGS, 25, 20);
         }
-
-        if(ChatContains("variety of game settings."))
+        else if(ChatContains("variety of game settings."))
         {
             TalkToNpc("Gielinor Guide");
             ContinueChat();

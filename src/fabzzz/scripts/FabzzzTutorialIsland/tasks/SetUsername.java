@@ -2,7 +2,6 @@ package fabzzz.scripts.FabzzzTutorialIsland.tasks;
 
 import fabzzz.scripts.FabzzzTutorialIsland.Task;
 import org.powbot.api.Condition;
-import org.powbot.api.rt4.Component;
 import org.powbot.api.rt4.Components;
 import org.powbot.api.rt4.Widgets;
 import org.powbot.api.rt4.stream.widget.ComponentStream;
@@ -14,7 +13,8 @@ public class SetUsername extends Task
 {
     private static final int setDisplayNameScreen = 558;
     private static final int textbox = 12;
-    //private static ComponentStream a = Components.stream().widget(setDisplayNameScreen);
+
+
     @Override
     public boolean activate()
     {
@@ -47,7 +47,8 @@ public class SetUsername extends Task
                 Condition.wait(() -> Components.stream().widget(setDisplayNameScreen).text("Sorry").viewable().isNotEmpty()
                         ||Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty(), 50, 60 );
             }
-            else if (Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty())
+            else if (Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty()
+                    && TextContainsExactUsername())
             {
                 System.out.println("Great -> username is available!");
                 System.out.println("Setting username!");
@@ -63,23 +64,26 @@ public class SetUsername extends Task
             System.out.println("Deleting typed text..");
             if(ClickOnTextBox())
             {
-                DeletypedText();
+                DeleteTypedText();
             }
         }
     }
+
     private boolean TextContainsExactUsername()
     {
-        return Widgets.widget(setDisplayNameScreen).component(textbox).text().equals(USERNAME)
-                || Widgets.widget(setDisplayNameScreen).component(textbox).text().equals(USERNAME + "*");
+        var widget = Widgets.widget(setDisplayNameScreen).component(textbox).text();
+        return widget.equals(USERNAME) || widget.equals(USERNAME + "*");
     }
 
     private boolean ClickOnTextBox()
     {
-        if(Widgets.widget(setDisplayNameScreen).component(textbox).inViewport())
+        var widget = Widgets.widget(setDisplayNameScreen).component(textbox);
+        if(widget.inViewport())
         {
-            Widgets.widget(setDisplayNameScreen).component(textbox).click();
-            Condition.wait(() -> Components.stream().widget(setDisplayNameScreen).textContains("*").viewable().isNotEmpty(), 50, 20);
-            if(Components.stream().widget(setDisplayNameScreen).textContains("*").viewable().isNotEmpty())
+            widget.click();
+            var textContainingWidget = Components.stream().widget(setDisplayNameScreen).textContains("*").viewable().isNotEmpty();
+            Condition.wait(() -> textContainingWidget , 50, 20);
+            if(textContainingWidget)
             {
                 return true;
             }
@@ -87,7 +91,7 @@ public class SetUsername extends Task
         return false;
     }
 
-    private void DeletypedText()
+    private void DeleteTypedText()
     {
         while(!Components.stream(setDisplayNameScreen).text("*").first().text().equals("*"))
         {
@@ -124,78 +128,3 @@ public class SetUsername extends Task
         }
     }
 }
-
-//deleting text func
-    //            int deleteButton = 67; //android universal? delete button
-    //            System.out.println("Deleting typed text..");
-    //            Components.stream().widget(setDisplayNameScreen).textContains(USERNAME).viewable().first().click();
-    //            //Components.stream(setDisplayNameScreen).text("*").first().text().equals("*")
-    //            while(Components.stream(setDisplayNameScreen).text("*").first().text().equals("*") || Components.stream(setDisplayNameScreen).textContains("*").isNotEmpty())
-    //            {
-    //                System.out.println("Pressing deletebutton");
-    //                Keyboard.INSTANCE.pressKey(deleteButton);
-    //                System.out.println("Name is: " + Components.stream(setDisplayNameScreen).first().text() );
-    //            }
-
-
-//        if(Components.stream().widget(setDisplayNameScreen).text("*").isNotEmpty())
-//
-//        if(Condition.wait(() -> Components.stream().widget(setDisplayNameScreen).text(USERNAME).viewable().isNotEmpty(), 100, 20))
-//        {
-//            System.out.println("In if text contains" + USERNAME);
-//
-//            //click look up name
-//            System.out.println("before if look up name");
-//            if(Components.stream().widget(setDisplayNameScreen).text("Look up name").viewable().isNotEmpty())
-//            {
-//                System.out.println("Clicking on look up name");
-//                //Components.stream().widget(widgetId).text("Look up name").viewable().first().click();
-//            }
-//
-//            if(Condition.wait(() -> Components.stream().widget(setDisplayNameScreen).text("Set name").viewable().isNotEmpty(), 100, 20))
-//            {
-//                System.out.println("Set name found! (used given name)");
-//                Components.stream().widget(setDisplayNameScreen).text("Set name").viewable().first().click();
-//            }
-//            else while(Components.stream().widget(setDisplayNameScreen).textContains("Sorry").viewable().isNotEmpty())
-//            {
-//                System.out.println("Username is not available - going to select a random one");
-//                var num = r.nextInt(3); //option 0,1,2 -> 0 inclusive -> bound exclusive
-//
-//                if(num == 0)
-//                {
-//                    System.out.println("Number 0 chosen -> first name");
-//                    Condition.wait(() -> Widgets.widget(setDisplayNameScreen).component(15).visible(), 50, 50);
-//                    Widgets.widget(setDisplayNameScreen).component(15).click();
-//                }
-//                if(num == 1)
-//                {
-//                    System.out.println("Number 1 chosen -> first name");
-//                    Condition.wait(() -> Widgets.widget(setDisplayNameScreen).component(16).visible(), 50, 50);
-//                    Widgets.widget(setDisplayNameScreen).component(16).click();
-//                }
-//                if(num == 2)
-//                {
-//                    System.out.println("Number 2 chosen -> first name");
-//                    Condition.wait(() -> Widgets.widget(setDisplayNameScreen).component(17).visible(), 50, 50);
-//                    Widgets.widget(setDisplayNameScreen).component(17).click();
-//                }
-
-
-
-
-
-//                    if(Condition.wait(() -> Components.stream().widget(widgetId).textContains("Great!").isNotEmpty(), 50, 50))
-//                    {
-//                        if(Components.stream().widget(widgetId).text("Set name").isNotEmpty())
-//                        {
-//                            System.out.println("Click Set name (random name used)");
-//                            Components.stream().widget(widgetId).text("Set name").first().click();
-//                        }
-//                    }
-
-//            }
-//        }
-
-
-
