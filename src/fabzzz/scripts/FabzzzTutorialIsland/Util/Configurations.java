@@ -12,9 +12,14 @@ public class Configurations
     public static String USERNAME = "Dragon";
     public static boolean IRON_MAN;
 
+    public static void OpenGameTab(Game.Tab tabToOpen)
+    {
+        Game.tab(tabToOpen);
+        Condition.wait(() -> Game.tab() == tabToOpen, 100, 20);
+    }
     public static void ContinueChat()
     {
-        while (Condition.wait(() -> Chat.canContinue(), 100, 20))
+        while (Condition.wait(Chat::canContinue, 100, 10))
         {
             System.out.println("Continuing chat...");
             Chat.clickContinue();
@@ -43,11 +48,11 @@ public class Configurations
         }
     }
 
-    public static void PlayerIsMoving(int maxWaitTime)
+    public static void PlayerIsMoving(int maxWaitTimeX100MS)
     {
         if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
         {
-            Condition.wait(() -> !Players.local().inMotion(), 100, maxWaitTime);
+            Condition.wait(() -> !Players.local().inMotion(), 100, maxWaitTimeX100MS);
         }
     }
 

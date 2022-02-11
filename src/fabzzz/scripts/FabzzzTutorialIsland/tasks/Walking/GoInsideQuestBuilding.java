@@ -10,6 +10,8 @@ import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
 public class GoInsideQuestBuilding extends Task
 {
+    private static int DOOR_ID = 9716;
+
     @Override
     public boolean activate()
     {
@@ -27,8 +29,7 @@ public class GoInsideQuestBuilding extends Task
             if(Areas.DOOR_IN_FRONT_OF_QUEST.contains(Players.local().tile()))
             {
                 System.out.println("Clicking on the door");
-                int doorId = 9716;
-                Objects.stream().id(doorId).nearest().first().interact("Open");
+                Objects.stream().id(DOOR_ID).nearest().first().interact("Open");
                 Condition.wait(() -> Areas.QUEST_AREA.contains(Players.local().tile()), 50, 60);
             } else
             {

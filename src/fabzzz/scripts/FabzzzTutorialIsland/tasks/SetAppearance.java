@@ -7,10 +7,8 @@ import org.powbot.api.rt4.Components;
 import org.powbot.api.rt4.Widgets;
 import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
-
 public class SetAppearance extends Task
 {
-
     private static boolean IS_FEMALE;
     private static boolean GENDER_SELECTED = false;
     private static final int APPEARENCE_MENU_WIDGET = 679;
@@ -24,44 +22,41 @@ public class SetAppearance extends Task
     @Override
     public void execute()
     {
-
-        //add a check here? do we run this everytime? i hope not.
-        if(r.nextBoolean() && !GENDER_SELECTED)
+        if(!GENDER_SELECTED)
         {
-            if(Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Male").isNotEmpty())
+            if(r.nextBoolean())
             {
-                System.out.println("Selecting male");
-                Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Male").viewable().first().click();
-                IS_FEMALE = false;
-                GENDER_SELECTED = true;
+                    //we do not have to select since we are male by default.
+                    IS_FEMALE = false;
+                    GENDER_SELECTED = true;
+            }
+            else
+            {
+                if(Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Female").isNotEmpty())
+                {
+                    System.out.println("Selecting female");
+
+                    Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Female").viewable().first().click();
+                    IS_FEMALE = true;
+                    GENDER_SELECTED = true;
+                }
             }
         }
-        else
-        {
-            if(Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Female").isNotEmpty())
-            {
-                System.out.println("Selecting female");
-                Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Female").viewable().first().click();
-                IS_FEMALE = true;
-                GENDER_SELECTED = true;
-            }
-        }
-
-//        if (IS_FEMALE)
-//        {
-//            CharacterDesign.remove(1); //make it not click on the beard thingy if is female is true
-//        }
 
         for (var designElement : CharacterDesign.values())
         {
-            var arrowRightInAppearance = Widgets.widget(APPEARENCE_MENU_WIDGET).component(designElement.getArrowRight());
-            if(arrowRightInAppearance.visible()) // does visible check if it is clickable?
+            if(designElement.getName().equals("Jaw") && IS_FEMALE)
             {
-                int amountToClick = r.nextInt(10);
-                for (int j = 0; j < amountToClick; j++)
+                System.out.println("Skipping 'JAW' because we are a female");
+                continue;
+            }
+            var arrowRightInAppearance = Widgets.widget(APPEARENCE_MENU_WIDGET).component(designElement.getArrowRight());
+            if(arrowRightInAppearance.visible())
+            {
+                int randomIntBelow10 = r.nextInt(10);
+                for (int amountToClick = 0; amountToClick < randomIntBelow10; amountToClick++)
                 {
                     arrowRightInAppearance.click();
-                    System.out.println("item=" + designElement.getName() + j + " amountToclick= " + amountToClick);
                 }
             }
         }

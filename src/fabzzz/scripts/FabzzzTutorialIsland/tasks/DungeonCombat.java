@@ -9,7 +9,23 @@ import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
 public class DungeonCombat extends Task
 {
-    static boolean checkForEquipment = false;
+    private static boolean CHECK_FOR_EQUIPMENT = false;
+    private static final int SHORTBOW_ID = 841;
+    private static final int BRONZE_DAGGER_ID = 1205;
+    private static final int BRONZE_SWORD_ID = 1277;
+    private static final int WOODEN_SHIELD_ID = 1171;
+    private static final int GATE_ID_RATS = 9719;
+    private static final int RAT_ID = 3313;
+    private static final int BRONZE_ARROW_ID = 882;
+    private static final int LADDER_ID = 9727;
+    private static final String GIANT_RAT = "Giant rat";
+
+    private static final int EQUIPMENT_SCREEN_WIDGET = 387;
+    private static final int EQUIPMENT_FULL_SCREEN = 84;
+    private static final int EQUIPMENT_STATS_BUTTON_IN_EQUIPMENT = 2;
+    private static final int EQUIPMENT_FULL_SCREEN_CLOSE_BUTTON = 3;
+    private static final int EQUIPMENT_FULL_SCREEN_CLOSE_BUTTON_EXACT_LOCATION = 11;
+
 
     @Override
     public boolean activate()
@@ -36,114 +52,94 @@ public class DungeonCombat extends Task
                 PlayerIsMoving(60);
             }
         }
-
-        if (ChatContains("You now have access to a new interface."))
+        else if (ChatContains("You now have access to a new interface."))
         {
-            Condition.wait(() -> Game.tab(Game.Tab.EQUIPMENT), 25, 40);
-            Condition.wait(() -> Game.tab() == Game.Tab.EQUIPMENT, 100, 20);
+            Game.tab(Game.Tab.EQUIPMENT);
+            Condition.wait(() -> Game.tab() == Game.Tab.EQUIPMENT, 100, 10);
         }
-
-        if (ChatContains("This is your worn inventory."))
+        else if (ChatContains("This is your worn inventory."))
         {
             if (Game.tab(Game.Tab.EQUIPMENT))
             {
-                if (Widgets.widget(387).component(2).visible()) //view equipment stats
+                if (Widgets.widget(EQUIPMENT_SCREEN_WIDGET).component(EQUIPMENT_STATS_BUTTON_IN_EQUIPMENT).visible()) //view equipment stats
                 {
-                    Widgets.widget(387).component(2).click();
+                    Widgets.widget(EQUIPMENT_SCREEN_WIDGET).component(EQUIPMENT_STATS_BUTTON_IN_EQUIPMENT).click();
                 }
             }
         }
-
-        if (ChatContains("You can see what items you are wearing in the worn"))
+        else if (ChatContains("You can see what items you are wearing in the worn"))
         {
             System.out.println("Going to open equipment and hold dagger");
-            int bronzeDaggerId = 1205;
-            int equipmentStatScreenWidget = 84;
-            System.out.println("a " + Components.stream().widget(equipmentStatScreenWidget).textContains("Equip You Character...").isNotEmpty());
-            System.out.println("122 " + Components.stream().widget(122).textContains("Equip You Character...").isNotEmpty());
-            System.out.println("614 " + Components.stream().widget(614).textContains("Equip You Character...").isNotEmpty());
-            System.out.println("651 " + Components.stream().widget(651).textContains("Equip You Character...").isNotEmpty());
-            System.out.println("708 " + Components.stream().widget(708).textContains("Equip You Character...").isNotEmpty());
 
-            if (Components.stream().widget(equipmentStatScreenWidget).textContains("Equip Your Character...").isNotEmpty())
+            if (Components.stream().widget(EQUIPMENT_FULL_SCREEN).textContains("Equip Your Character...").isNotEmpty())
             {
                 System.out.println("Equip your character... screen is open -> clicking dagger");
-                Inventory.stream().id(bronzeDaggerId).first().click();
+                Inventory.stream().id(BRONZE_DAGGER_ID).first().click();
             }
         }
-        if (ChatContains("You're now holding your dagger."))
+        else if (ChatContains("You're now holding your dagger."))
         {
             System.out.println("Holding dagger..");
-            int equipmentStatScreenWidget = 84;
-            int closewidget1 = 3;
-            int closewidget2 = 11;
-            if (Components.stream().widget(equipmentStatScreenWidget).textContains("Equip Your Character...").isNotEmpty())
+
+            if (Components.stream().widget(EQUIPMENT_FULL_SCREEN).textContains("Equip Your Character...").isNotEmpty())
             {
-                System.out.println("Equipping screen is still open..." + Widgets.widget(equipmentStatScreenWidget).component(closewidget1).component(closewidget2).visible());
-                if (Widgets.widget(equipmentStatScreenWidget).component(closewidget1).component(closewidget2).visible())
+                System.out.println("Equipping screen is still open...");
+                if (Widgets.widget(EQUIPMENT_FULL_SCREEN).component(EQUIPMENT_FULL_SCREEN_CLOSE_BUTTON).component(EQUIPMENT_FULL_SCREEN_CLOSE_BUTTON_EXACT_LOCATION).visible())
                 {
                     System.out.println("Found the close button, going to close it.");
-                    Widgets.widget(equipmentStatScreenWidget).component(closewidget1).component(closewidget2).click();
-                    Condition.wait(() -> Components.stream().widget(equipmentStatScreenWidget).textContains("Equip You Character...").isEmpty(), 50, 20);
+                    Widgets.widget(EQUIPMENT_FULL_SCREEN).component(EQUIPMENT_FULL_SCREEN_CLOSE_BUTTON).component(EQUIPMENT_FULL_SCREEN_CLOSE_BUTTON_EXACT_LOCATION).click();
+                    Condition.wait(() -> Components.stream().widget(EQUIPMENT_FULL_SCREEN).textContains("Equip You Character...").isEmpty(), 50, 20);
                 }
             }
-
             if (Areas.DUNGEON_COMBAT_INSTRUCTOR.contains(Players.local().tile()))
             {
                 System.out.println("equipping screen is closed, going to talk to combat instructor");
                 TalkToNpc("Combat Instructor");
                 PlayerIsMoving(20);
                 ContinueChat();
-            } else
+            }
+            else
             {
                 System.out.println("equipping screen is closed, but we are not in the area..");
                 Movement.moveTo(Areas.DUNGEON_COMBAT_INSTRUCTOR.getRandomTile());
                 PlayerIsMoving(60);
             }
         }
-        if (ChatContains("To unequip an item,"))
+        else if (ChatContains("To unequip an item,"))
         {
             System.out.println("Going to equip the bronze sword and bronze shield");
-            int bronzeSwordId = 1277;
-            int woodenShieldId = 1171;
             if (Inventory.opened())
             {
-                if (Inventory.stream().id(bronzeSwordId).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
+                if (Inventory.stream().id(BRONZE_SWORD_ID).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
                 {
-                    Inventory.stream().id(bronzeSwordId).first().click();
-                    Condition.wait(() -> Inventory.stream().id(bronzeSwordId).isEmpty(), 50, 10);
+                    Inventory.stream().id(BRONZE_SWORD_ID).first().click();
+                    Condition.wait(() -> Inventory.stream().id(BRONZE_SWORD_ID).isEmpty(), 50, 10);
                 }
-                if (Inventory.stream().id(woodenShieldId).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
+                if (Inventory.stream().id(WOODEN_SHIELD_ID).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
                 {
-                    Inventory.stream().id(woodenShieldId).first().click();
-                    Condition.wait(() -> Inventory.stream().id(woodenShieldId).isEmpty(), 50, 10);
+                    Inventory.stream().id(WOODEN_SHIELD_ID).first().click();
+                    Condition.wait(() -> Inventory.stream().id(WOODEN_SHIELD_ID).isEmpty(), 50, 10);
                 }
             }
-
         }
-
-        if (ChatContains("Tap on the flashing crossed swords icon"))
+        else if (ChatContains("Tap on the flashing crossed swords icon"))
         {
-            Condition.wait(() -> Game.tab(Game.Tab.ATTACK), 25, 40);
-            Condition.wait(() -> Game.tab() == Game.Tab.ATTACK, 100, 20);
+            Game.tab(Game.Tab.ATTACK);
+            Condition.wait(() -> Game.tab() == Game.Tab.ATTACK, 100, 10);
             System.out.println("Do we have tab open? : " + (Game.tab() == Game.Tab.ATTACK));
         }
-
-        if (ChatContains("This is your combat interface."))
+        else if (ChatContains("This is your combat interface."))
         {
             if (Areas.DUNGEON_OUTSIDE_RAT_DOOR.contains(Players.local().tile()))
             {
                 System.out.println("We are at: dungeon outside rat door");
-                int gateId = 9719; //also 9720
-
-                Objects.stream().id(gateId).nearest().first().interact("Open", "Gate");
+                Objects.stream().id(GATE_ID_RATS).nearest().first().interact("Open", "Gate");
 
                 if (Condition.wait(() -> Players.local().inMotion(), 15, 20))
                 {
                     System.out.println("Moving to the door and opening it");
                     Condition.wait(() -> Areas.DUNGEON_INSIDE_RAT_CAGE.contains(Players.local().tile()), 100, 40);
                 }
-
             } else
             {
                 Movement.moveTo(Areas.DUNGEON_OUTSIDE_RAT_DOOR.getRandomTile());
@@ -151,24 +147,33 @@ public class DungeonCombat extends Task
                 PlayerIsMoving(60);
             }
         }
-        if (ChatContains("It's time to slay some rats!") ||ChatContains("While you are fighting you will see a bar over your head.") )
+        else if (ChatContains("It's time to slay some rats!") ||ChatContains("While you are fighting you will see a bar over your head.") )
         {
             if (Areas.DUNGEON_INSIDE_RAT_CAGE.contains(Players.local().tile()))
             {
-                int ratId = 3313;
                 System.out.println("Inside cage! going to attack a rat!");
-                if (Npcs.stream().id(ratId).isNotEmpty())
+                Npc giantRat = Npcs.stream().name(GIANT_RAT).nearest().first();
+                if(!Players.local().interacting().valid() && giantRat.inViewport() && giantRat.healthPercent() > 0)
                 {
-                    Npcs.stream().id(ratId).nearest().first().interact("Attack", "Giant rat");
-                    PlayerIsMoving(40);
-                    System.out.println("In combat with the rat!");
-                    Condition.wait(() -> !Players.local().interacting().healthBarVisible(), 200, 50); // in combat with rat
+                    System.out.println("attacking!");
+                    if(giantRat.interact("Attack", GIANT_RAT))
+                    {
+                        System.out.println("in motion..");
+                        if(Condition.wait(() -> Players.local().interacting().valid(), 15, 40))
+                        {
+                            System.out.println("in motion done.. interacting...");
+                            Condition.wait(() -> !Players.local().interacting().valid(), 200, 100);
+                        }
+
+                    }
+                }
+                else
+                {
+                    TurnCamera();
                 }
             }
         }
-
-
-        if (ChatContains("Pass through the gate and talk to the combat instructor"))
+        else if (ChatContains("Pass through the gate and talk to the combat instructor"))
         {
             if (Areas.DUNGEON_COMBAT_INSTRUCTOR.contains(Players.local().tile()))
             {
@@ -191,16 +196,14 @@ public class DungeonCombat extends Task
                 if (Areas.DUNGEON_INSIDE_RAT_DOOR.contains(Players.local().tile()))
                 {
                     System.out.println("We are at: dungeon outside rat door");
-                    int gateId = 9719; //also 9720
-
-                    Objects.stream().id(gateId).nearest().first().interact("Open", "Gate");
-
+                    Objects.stream().id(GATE_ID_RATS).nearest().first().interact("Open", "Gate");
                     if (Condition.wait(() -> Players.local().inMotion(), 15, 20))
                     {
                         System.out.println("Moving to the door and opening it");
                         Condition.wait(() -> Areas.DUNGEON_INSIDE_RAT_CAGE.contains(Players.local().tile()), 100, 40);
                     }
-                } else
+                }
+                else
                 {
                     System.out.println("Moving to the cage door");
                     Movement.moveTo(Areas.DUNGEON_INSIDE_RAT_DOOR.getRandomTile());
@@ -208,56 +211,56 @@ public class DungeonCombat extends Task
                 }
             }
         }
-
-        if (ChatContains("I can't reach that!"))
+        else if (ChatContains("I can't reach that!"))
         {
             ContinueChat();
         }
-        if (ChatContains("Now you have a bow and some arrows."))
+        else if (ChatContains("Now you have a bow and some arrows."))
         {
-            int shortbowId = 841;
-            int bronzeArrowId = 882;
-
-            if (checkForEquipment)
+            if (CHECK_FOR_EQUIPMENT)
             {
                 Game.tab(Game.Tab.EQUIPMENT);
-                Condition.wait(() -> Game.tab() == Game.Tab.EQUIPMENT, 100, 20);
+                Condition.wait(() -> Game.tab() == Game.Tab.EQUIPMENT, 100, 10);
                 System.out.println("Do we have  equipment tab open? : " + (Game.tab() == Game.Tab.EQUIPMENT));
             }
-            checkForEquipment = true;
+            CHECK_FOR_EQUIPMENT = true;
 
-            if (Equipment.itemAt(Equipment.Slot.MAIN_HAND).id() != shortbowId || Equipment.itemAt(Equipment.Slot.QUIVER).id() != bronzeArrowId)
+            if (Equipment.itemAt(Equipment.Slot.MAIN_HAND).id() != SHORTBOW_ID || Equipment.itemAt(Equipment.Slot.QUIVER).id() != BRONZE_ARROW_ID)
             {
                 System.out.println("We are not wearing our range items yet..");
                 if (Inventory.open())
                 {
                     System.out.println("Going to equip the shortbow and/or arrows");
-                    if (Inventory.stream().id(shortbowId).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
+                    if (Inventory.stream().id(SHORTBOW_ID).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
                     {
-                        Inventory.stream().id(shortbowId).first().click();
-                        Condition.wait(() -> Inventory.stream().id(shortbowId).isEmpty(), 50, 10);
+                        Inventory.stream().id(SHORTBOW_ID).first().click();
+                        Condition.wait(() -> Inventory.stream().id(SHORTBOW_ID).isEmpty(), 50, 10);
                     }
-                    if (Inventory.stream().id(bronzeArrowId).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
+                    if (Inventory.stream().id(BRONZE_ARROW_ID).isNotEmpty() && Game.tab(Game.Tab.INVENTORY))
                     {
-                        Inventory.stream().id(bronzeArrowId).first().click();
-                        Condition.wait(() -> Inventory.stream().id(bronzeArrowId).isEmpty(), 50, 10);
+                        Inventory.stream().id(BRONZE_ARROW_ID).first().click();
+                        Condition.wait(() -> Inventory.stream().id(BRONZE_ARROW_ID).isEmpty(), 50, 10);
                     }
                 }
-            } else if (Areas.DUNGEON_RANGING_AREA.contains(Players.local().tile()))
+            }
+            else if (Areas.DUNGEON_RANGING_AREA.contains(Players.local().tile()))
             {
-                int ratId = 3313;
-                System.out.println("Inside range spot going to attack a rat!");
-                if (Npcs.stream().id(ratId).isNotEmpty() && Npcs.stream().id(ratId).nearest().first().inViewport())
+                System.out.println("Inside cage! going to attack a rat!");
+                Npc giantRat = Npcs.stream().name(GIANT_RAT).nearest().first();
+                if(!Players.local().interacting().valid() && giantRat.inViewport() && giantRat.healthPercent() > 0)
                 {
-                    Npcs.stream().id(3313).nearest().first().interact("Attack", "Giant rat");
-
-                    PlayerIsMoving(40);
-                    System.out.println("In combat with the rat!");
-                    if (Condition.wait(() -> Players.local().interacting().healthBarVisible(), 15, 20))
+                    System.out.println("attacking!");
+                    if(giantRat.interact("Attack", GIANT_RAT))
                     {
-                        Condition.wait(() -> !Players.local().interacting().healthBarVisible(), 100, 150); // in combat with rat
+                        System.out.println("in motion..");
+                        if(Condition.wait(() -> Players.local().interacting().valid(), 15, 40))
+                        {
+                            System.out.println("in motion done.. interacting...");
+                            Condition.wait(() -> !Players.local().interacting().valid(), 200, 100);
+                        }
                     }
-                } else
+                }
+                else
                 {
                     TurnCamera();
                 }
@@ -267,23 +270,23 @@ public class DungeonCombat extends Task
                 PlayerIsMoving(50);
             }
         }
-
-        if (ChatContains("Moving on"))
+        else if (ChatContains("Moving on"))
         {
             if (Areas.DUNGEON_EXIT_LADDER.contains(Players.local().tile()))
             {
-                int ladderId = 9727;
-                GameObject ladder = Objects.stream().id(ladderId).nearest().first();
+                GameObject ladder = Objects.stream().id(LADDER_ID).nearest().first();
 
                 if (ladder.inViewport())
                 {
                     ladder.click();
                     Condition.wait(() -> Areas.BETWEEN_CAVE_BANK.contains(Players.local().tile()), 100, 50);
-                } else
+                }
+                else
                 {
                     TurnCamera();
                 }
-            } else
+            }
+            else
             {
                 Movement.moveTo(Areas.DUNGEON_EXIT_LADDER.getRandomTile());
                 PlayerIsMoving(70);

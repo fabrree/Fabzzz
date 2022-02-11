@@ -28,32 +28,28 @@ public class Prayer extends Task
                 ContinueChat();
             }
         }
-
-        if(ChatContains("Tap on the flashing icon to open the Prayer menu."))
+        else if(ChatContains("Tap on the flashing icon to open the Prayer menu."))
         {
-            Condition.wait(() -> Game.tab(Game.Tab.PRAYER), 25, 40);
-            Condition.wait(() -> Game.tab() == Game.Tab.PRAYER, 100, 20);
+            Game.tab(Game.Tab.PRAYER);
+            Condition.wait(() -> Game.tab() == Game.Tab.PRAYER, 100, 10);
         }
-
-        if(ChatContains("Talk with Brother Brace and he'll tell you about prayers."))
+        else if(ChatContains("Talk with Brother Brace and he'll tell you about prayers."))
         {
             TalkToNpc("Brother Brace");
             ContinueChat();
         }
-
-        if(ChatContains("You should now see another new icon."))
+        else if(ChatContains("You should now see another new icon."))
         {
-            Condition.wait(() -> Game.tab(Game.Tab.FRIENDS_LIST), 25, 40);
+            Game.tab(Game.Tab.FRIENDS_LIST);
             Condition.wait(() -> Game.tab() == Game.Tab.FRIENDS_LIST, 100, 20);
         }
-        if(ChatContains("These two lists can be very helpful for"))
+        else if(ChatContains("These two lists can be very helpful for"))
         {
             TalkToNpc("Brother Brace");
             ContinueChat();
         }
-        if(ChatContains("You're almost finished on tutorial island."))
+        else if(ChatContains("You're almost finished on tutorial island."))
         {
-
             if(Areas.PRAYER_AREA_OUT_DOOR.contains(Players.local().tile()))
             {
                 int doorId = 9723;
@@ -76,8 +72,6 @@ public class Prayer extends Task
                     Condition.wait(() -> Areas.PRAYER_AREA_OUT_DOOR.contains(Players.local().tile()), 100, 50);
                 }
             }
-
-
         }
     }
 }

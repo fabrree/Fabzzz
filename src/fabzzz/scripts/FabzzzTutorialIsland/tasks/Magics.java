@@ -36,23 +36,19 @@ public class Magics extends Task
                 PlayerIsMoving(120);
             }
         }
-
-        if(ChatContains("Open up the magic interface by tapping"))
+        else if(ChatContains("Open up the magic interface by tapping"))
         {
             System.out.println("Opening magic tab");
-            Condition.wait(() -> Game.tab(Game.Tab.MAGIC), 25, 40);
-            Condition.wait(() -> Game.tab() == Game.Tab.MAGIC, 100, 20);
+            Game.tab(Game.Tab.MAGIC);
+            Condition.wait(() -> Game.tab() == Game.Tab.MAGIC, 100, 10);
         }
-
-        if(ChatContains("This is your magic interface. All of your spells"))
+        else if(ChatContains("This is your magic interface. All of your spells"))
         {
             TalkToNpc("Magic Instructor");
             ContinueChat();
         }
-
-        if(ChatContains("You now have some runes."))
+        else if(ChatContains("You now have some runes."))
         {
-            System.out.println("Are we on kill spot? " + (Areas.MAGIC_KILL_CHICKEN_SPOT.tile() == Players.local().tile()));
             if(Areas.MAGIC_KILL_CHICKEN_SPOT.tile().equals(Players.local().tile()))
             {
                 System.out.println("We are on the chicken kill tile!");
@@ -71,8 +67,7 @@ public class Magics extends Task
                 PlayerIsMoving(40);
             }
         }
-
-        if(ChatContains("You're nearly finished with the tutorial"))
+        else if(ChatContains("You're nearly finished with the tutorial"))
         {
             if(IRON_MAN)
             {
@@ -84,13 +79,13 @@ public class Magics extends Task
                 TalkToNpc("Magic Instructor");
                 ContinueChat();
 
-                if(Condition.wait(() -> Chat.INSTANCE.optionBarComponent().visible(), 100, 20))
+                if(Chat.INSTANCE.optionBarComponent().visible())
                 {
                     System.out.println("Chat click -> Yes");
                     Chat.stream().textContains("Yes").first().select();
                 }
                 ContinueChat();
-                if(Condition.wait(() -> Chat.INSTANCE.optionBarComponent().visible(), 100, 20))
+                if(Chat.INSTANCE.optionBarComponent().visible())
                 {
                     System.out.println("Chat click -> No, I'm not planning to do that.");
                     Chat.stream().textContains("No, I'm not planning to do that.").first().select();
@@ -98,8 +93,7 @@ public class Magics extends Task
                 ContinueChat();
             }
         }
-
-        if(!Areas.MAGIC_AREA.contains(Players.local().tile()))
+        else if(!Areas.MAGIC_AREA.contains(Players.local().tile()))
         {
             Game.logout();
             ScriptManager.INSTANCE.stop();

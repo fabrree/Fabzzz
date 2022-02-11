@@ -13,47 +13,55 @@ public class SetUsername extends Task
 {
     private static final int setDisplayNameScreen = 558;
     private static final int textbox = 12;
+    private ComponentStream stream;
 
 
     @Override
     public boolean activate()
     {
-        return Components.stream().widget(setDisplayNameScreen).textContains("Set display name").isNotEmpty();
+        return Components.stream(setDisplayNameScreen).textContains("Set display name").isNotEmpty();
     }
 
     @Override
     public void execute()
     {
         System.out.println("Execute -> SetUsername with name: " + USERNAME);
+        stream = Components.stream(setDisplayNameScreen);
         if (Components.stream(setDisplayNameScreen).text("*").first().text().equals("*"))
         {
-            System.out.println("Click on text box");
-            Components.stream().widget(setDisplayNameScreen).text("*").viewable().first().click();
-            System.out.println("Typing..");
-            Keyboard.INSTANCE.type(USERNAME);
-            Condition.wait(() -> Components.stream(setDisplayNameScreen).text("*").first().text().equals(USERNAME + "*"), 50, 30);
+            System.out.println("Click on username text box");
+            if(Components.stream(setDisplayNameScreen).text("*").viewable().first().click())
+            {
+                System.out.println("Typing username...");
+                Keyboard.INSTANCE.type(USERNAME);
+                Condition.wait(() -> Components.stream(setDisplayNameScreen).text("*").first().text().equals(USERNAME + "*"), 50, 30);
+            }
         }
         else if (TextContainsExactUsername())
         {
-            System.out.println("Username is typed in the chat box...!");
 
-
-            if(Components.stream().widget(setDisplayNameScreen).text("Look up name").viewable().isNotEmpty()
-                    && Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isEmpty()
-                    && Components.stream().widget(setDisplayNameScreen).text("Sorry").viewable().isEmpty())
+            if(Components.stream(setDisplayNameScreen).text("Look up name").first().visible() && Components.stream(setDisplayNameScreen).text("Great").viewable().isEmpty()
+                    && Components.stream(setDisplayNameScreen).text("Sorry").viewable().isEmpty())
             {
                 System.out.println("Clicking on look up name");
-                Components.stream().widget(setDisplayNameScreen).text("Look up name").viewable().first().click();
-                Condition.wait(() -> Components.stream().widget(setDisplayNameScreen).text("Sorry").viewable().isNotEmpty()
-                        ||Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty(), 50, 60 );
+                Components.stream(setDisplayNameScreen).text("Look up name").viewable().first().click();
+                Condition.wait(() -> Components.stream(setDisplayNameScreen).text("Sorry").viewable().isNotEmpty()
+                        ||Components.stream(setDisplayNameScreen).text("Great").viewable().isNotEmpty(), 50, 60 );
             }
-            else if (Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty()
+            else if (Components.stream(setDisplayNameScreen).text("Great").viewable().isNotEmpty()
                     && TextContainsExactUsername())
             {
                 System.out.println("Great -> username is available!");
                 System.out.println("Setting username!");
+                if(Components.stream(setDisplayNameScreen).text("Set name").viewable().isNotEmpty())
+                {
+                    if(Components.stream(setDisplayNameScreen).text("Set name").first().click())
+                    {
+                        Condition.wait(() -> Components.stream(TEXT_SCREEN).textContains("appearance").isNotEmpty(), 100, 30);
+                    }
+                }
             }
-            else if(Components.stream().widget(setDisplayNameScreen).text("Sorry").viewable().isNotEmpty())
+            else if(Components.stream(setDisplayNameScreen).text("Sorry").viewable().isNotEmpty())
             {
                 System.out.println("Sorry -> username is not available");
                 ClickRandomGeneratedUsername();
@@ -83,10 +91,7 @@ public class SetUsername extends Task
             widget.click();
             var textContainingWidget = Components.stream().widget(setDisplayNameScreen).textContains("*").viewable().isNotEmpty();
             Condition.wait(() -> textContainingWidget , 50, 20);
-            if(textContainingWidget)
-            {
-                return true;
-            }
+            return textContainingWidget;
         }
         return false;
     }
@@ -118,13 +123,15 @@ public class SetUsername extends Task
         {
             generatedNameWidgetId = 17;
         }
-        Condition.wait(() -> Widgets.widget(setDisplayNameScreen).component(generatedNameWidgetId).visible(), 50, 50);
-        Widgets.widget(setDisplayNameScreen).component(generatedNameWidgetId).click();
-        Condition.wait(() -> Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty(), 100, 30);
-        if(Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty())
+        if( Widgets.widget(setDisplayNameScreen).component(generatedNameWidgetId).visible())
         {
-            System.out.println("Setting USERNAME to " + Widgets.widget(setDisplayNameScreen).component(generatedNameWidgetId).text());
-            USERNAME = Widgets.widget(setDisplayNameScreen).component(generatedNameWidgetId).text();
+            Widgets.widget(setDisplayNameScreen).component(generatedNameWidgetId).click();
+            Condition.wait(() -> Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty(), 100, 30);
+            if(Components.stream().widget(setDisplayNameScreen).text("Great").viewable().isNotEmpty())
+            {
+                System.out.println("Setting new USERNAME");
+                USERNAME = Widgets.widget(setDisplayNameScreen).component(generatedNameWidgetId).text();
+            }
         }
     }
 }

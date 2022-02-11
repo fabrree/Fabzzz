@@ -1,6 +1,12 @@
 package fabzzz.scripts.FabzzzTutorialIsland;
+import fabzzz.scripts.FabzzzTutorialIsland.Util.Areas;
 import fabzzz.scripts.FabzzzTutorialIsland.tasks.*;
+import fabzzz.scripts.FabzzzTutorialIsland.tasks.Prayer;
+import fabzzz.scripts.FabzzzTutorialIsland.tasks.Quests;
 import fabzzz.scripts.FabzzzTutorialIsland.tasks.Walking.*;
+import org.powbot.api.Condition;
+import org.powbot.api.rt4.*;
+import org.powbot.api.rt4.walking.model.Skill;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
@@ -8,8 +14,9 @@ import org.powbot.mobile.service.ScriptUploader;
 
 import java.util.ArrayList;
 
-import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.IRON_MAN;
-import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.USERNAME;
+import static fabzzz.scripts.FabzzzTutorialIsland.Util.Areas.BETWEEN_FISH_GATE_COOKING_DOOR;
+import static fabzzz.scripts.FabzzzTutorialIsland.Util.Areas.FISHING_CONTINUE_GATE_SPOT;
+import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
 
 @ScriptManifest(

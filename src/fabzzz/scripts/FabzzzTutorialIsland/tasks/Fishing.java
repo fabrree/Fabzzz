@@ -5,11 +5,15 @@ import fabzzz.scripts.FabzzzTutorialIsland.Util.Areas;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 
-import static fabzzz.scripts.FabzzzTutorialIsland.Util.Areas.BETWEEN_FISH_GATE_COOKING_DOOR;
+import static fabzzz.scripts.FabzzzTutorialIsland.Util.Areas.FISHING_CONTINUE_GATE_SPOT;
 import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
 public class Fishing extends Task
 {
+    private final int SHRIMP_ID = 2514;
+    private final int FIRE_ID = 26185;
+    private final int GATE_ID = 9470;
+
     @Override
     public boolean activate()
     {
@@ -29,44 +33,40 @@ public class Fishing extends Task
             TalkToNpc("Survival Expert");
             ContinueChat();
         }
-
-        if(ChatContains("You've been given an item"))
+        else if(ChatContains("You've been given an item"))
         {
             Game.tab(Game.Tab.INVENTORY);
         }
-
-        var shrimp = 2514;
-        if(ChatContains("Catch some shrimp")
-               && Inventory.stream().id(shrimp).isEmpty())
+        else if(ChatContains("Catch some shrimp") && Inventory.stream().id(SHRIMP_ID).isEmpty())
         {
             System.out.println("going to fish");
             var npc = Npcs.stream().filtered(x -> x.name().contains("Fishing spot")).nearest().first();
-            if (Condition.wait(() -> npc.inViewport(), 100, 20)) {
+            if (npc.inViewport()) {
                 System.out.println(npc.name() + " fishing spot found! -> in viewport");
                 npc.interact("Net");
                 PlayerIsMoving(30); //moving to fishing spot
-                Condition.wait(() -> Inventory.stream().id(shrimp).isNotEmpty(), 100, 80); // fishing until fish
+                Condition.wait(() -> Inventory.stream().id(SHRIMP_ID).isNotEmpty(), 100, 80); // fishing until fish
+            }
+            else
+            {
+                TurnCamera();
             }
         }
-
-        if(ChatContains("You manage to catch some shrimp."))
+        else if(ChatContains("You manage to catch some shrimp."))
         {
             ContinueChat();
         }
-
-        if(ChatContains("You've gained some experience"))
+        else if(ChatContains("You've gained some experience"))
         {
             System.out.println("going to skills tab ");
             Game.tab(Game.Tab.STATS);
         }
-
-        if(ChatContains("On this menu you can view your skills."))
+        else if(ChatContains("On this menu you can view your skills."))
         {
             TalkToNpc("Survival Expert");
             ContinueChat();
         }
-
-        if(ChatContains("Woodcutting"))
+        else if(ChatContains("Woodcutting"))
         {
             GameObject tree = Objects.stream().within(12).id(9730).nearest().first();
             if (tree.inViewport()) {
@@ -75,15 +75,14 @@ public class Fishing extends Task
             }
             ContinueChat();
         }
-
-        if(ChatContains("Now that you have some logs,"))
+        else if(ChatContains("Now that you have some logs,"))
         {
             System.out.println("Making fire");
-            int fireId = 26185;
-            GameObject fire = Objects.stream().id(fireId).nearest().first();
+
+            GameObject fire = Objects.stream().id(FIRE_ID).nearest().first();
             System.out.println("Fire tile = " + fire.tile());
             System.out.println("Player tile = " + Players.local().tile());
-            if(!Players.local().tile().equals(fire.tile())) //26185 "Fire"
+            if(!Players.local().tile().equals(fire.tile()))
             {
                 if (Game.tab(Game.Tab.INVENTORY))
                 {
@@ -100,7 +99,7 @@ public class Fishing extends Task
                     }
                     else
                     {
-                        Game.tab(Game.Tab.STATS);
+                        Inventory.stream().id(Inventory.selectedItem().id()).first().click();
                     }
                 }
             }
@@ -111,50 +110,49 @@ public class Fishing extends Task
                 PlayerIsMoving(30);
             }
         }
-
-        var fire = 26185;
-        if(ChatContains("Cooking")
-            && Objects.stream().id(fire).within(10).isNotEmpty())
+        else if(ChatContains("Cooking") && Objects.stream().id(FIRE_ID).within(10).isNotEmpty())
         {
             if(Game.tab(Game.Tab.INVENTORY))
             {
                 System.out.println("Going to cook my shrimp");
-                Item shrimpItem = Inventory.stream().id(shrimp).first();
+                Item shrimpItem = Inventory.stream().id(SHRIMP_ID).first();
                 if (Inventory.selectedItem().id() == -1)
                 {
-                    if(Condition.wait(() -> shrimpItem.interact("Use", "Fire"), 50, 50 ))
+                    if(shrimpItem.interact("Use", "Fire"))
                     {
-                       Objects.stream().id(fire).nearest().first().click();
-                       PlayerIsMoving(50);
+                        Objects.stream().id(FIRE_ID).nearest().first().click();
+                        PlayerIsMoving(50); // walking to the fire
+                        PlayerIsMoving(50); //cooking the shimp
                     }
-                } else
+                }
+                else
                 {
                     System.out.println("De-selecting selcted item");
                     Inventory.stream().id(Inventory.selectedItem().id()).first().click();
                 }
             }
         }
-        if(ChatContains("burn the shrimp"))
+        else if(ChatContains("burn the shrimp") || ChatContains("You manage to cook some shrimp") )
         {
             ContinueChat();
         }
-
-        if(ChatContains("You manage to cook some shrimp"))
+        else if(ChatContains("Moving on") && Areas.FISHING_AREA.contains(Players.local().tile()))
         {
-            ContinueChat();
-        }
-
-        if(ChatContains("Moving on")
-        && Areas.FISHING_AREA.contains(Players.local().tile()))
-        {
-
             if(Areas.FISHING_CONTINUE_GATE_SPOT.contains(Players.local()))
             {
                 System.out.println("I am at the gate already");
-                TurnCamera();
-                int gateId = 9470;
-                Condition.wait(() -> Objects.stream().id(gateId).nearest().first().interact("Open"), 100, 10);
-                Condition.wait(() -> BETWEEN_FISH_GATE_COOKING_DOOR.contains(Players.local().tile()), 100, 40);
+                var gate = Objects.stream().id(GATE_ID).nearest().first();
+                if(gate.inViewport())
+                {
+                    if(gate.interact("Open"))
+                    {
+                        Condition.wait(() -> !FISHING_CONTINUE_GATE_SPOT.contains(Players.local().tile()), 100, 40);
+                    }
+                }
+                else
+                {
+                    TurnCamera();
+                }
             }
             else
             {
@@ -162,7 +160,6 @@ public class Fishing extends Task
                 Movement.step(Areas.FISHING_CONTINUE_GATE_SPOT.getRandomTile());
                 PlayerIsMoving(30);
             }
-
         }
     }
 }

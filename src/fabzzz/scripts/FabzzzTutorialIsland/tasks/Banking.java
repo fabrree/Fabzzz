@@ -9,6 +9,10 @@ import org.powbot.api.rt4.*;
 
 public class Banking extends Task
 {
+    private static final int POLL_BOOTH_ID = 26801;
+    private static final int BANK_FIRST_DOOR_ID = 9721;
+    private static final int BANK_SECOND_DOOR = 9722;
+
     @Override
     public boolean activate()
     {
@@ -35,8 +39,8 @@ public class Banking extends Task
             if(Bank.close())
             {
                 System.out.println("Walking to poll booth");
-                int pollBoothId = 26801;
-                GameObject pollBooth = Objects.stream().id(pollBoothId).nearest().first();
+
+                GameObject pollBooth = Objects.stream().id(POLL_BOOTH_ID).nearest().first();
                 if(pollBooth.inViewport())
                 {
                     System.out.println("Clicking on poll booth");
@@ -51,13 +55,12 @@ public class Banking extends Task
                 }
             }
         }
-
-        if(ChatContains("Polls are run periodically to let"))
+        else if(ChatContains("Polls are run periodically to let"))
         {
             if(Areas.BANK_FIRST_DOOR.tile().equals(Players.local().tile()))
             {
-                int doorId = 9721;
-                GameObject door = Objects.stream().id(doorId).nearest().first();
+
+                GameObject door = Objects.stream().id(BANK_FIRST_DOOR_ID).nearest().first();
                 if(door.inViewport())
                 {
                     door.interact("Open", "Door");
@@ -78,30 +81,27 @@ public class Banking extends Task
                 PlayerIsMoving(30);
             }
         }
-
-        if(ChatContains("all about your account."))
+        else if(ChatContains("all about your account."))
         {
             TalkToNpc("Account Guide");
             ContinueChat();
         }
-
-        if(ChatContains("to open your Account Management menu."))
+        else if(ChatContains("to open your Account Management menu."))
         {
             System.out.println("Opening account management tab");
-            Condition.wait(() -> Game.tab(Game.Tab.ACCOUNT_MANAGEMENT), 25, 40);
+            Game.tab(Game.Tab.ACCOUNT_MANAGEMENT);
             Condition.wait(() -> Game.tab() == Game.Tab.ACCOUNT_MANAGEMENT, 100, 20);
             System.out.println("Account management tab is open");
         }
-
-        if(ChatContains("This is your Account Management menu where"))
+        else if(ChatContains("This is your Account Management menu where"))
         {
             TalkToNpc("Account Guide");
             ContinueChat();
         }
-        if(ChatContains("Continue through the next door."))
+        else if(ChatContains("Continue through the next door."))
         {
-            int doorId = 9722;
-            GameObject door = Objects.stream().id(doorId).nearest().first();
+
+            GameObject door = Objects.stream().id(BANK_SECOND_DOOR).nearest().first();
             if(door.inViewport())
             {
                 door.interact("Open", "Door");

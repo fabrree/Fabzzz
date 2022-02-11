@@ -9,6 +9,7 @@ import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
 public class GoInsideCookingBuilding extends Task
 {
+    private static final int DOOR_ID = 9709;
     @Override
     public boolean activate()
     {
@@ -25,8 +26,7 @@ public class GoInsideCookingBuilding extends Task
         }
         if(Areas.DOOR_IN_FRONT_OF_COOKING.contains(Players.local().tile()))
         {
-            int doorId = 9709;
-            GameObject door = Objects.stream().id(doorId).nearest().first();
+            GameObject door = Objects.stream().id(DOOR_ID).nearest().first();
             if(door.inViewport())
             {
                 door.interact("Open", "Door");

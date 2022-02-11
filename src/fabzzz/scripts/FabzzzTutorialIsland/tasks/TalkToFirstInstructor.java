@@ -24,15 +24,18 @@ public class TalkToFirstInstructor extends Task
         {
             TalkToNpc("Gielinor Guide");
             ContinueChat();
-
-            if(Condition.wait(() -> Chat.INSTANCE.optionBarComponent().visible(), 100, 20))
+            if(Chat.INSTANCE.optionBarComponent().visible())
             {
                 System.out.println("Chat send input 1");
-                Chat.stream().textContains("I am an experienced player.").first().select();
+                if(Chat.stream().textContains("I am an experienced player.").isNotEmpty())
+                {
+                    System.out.println("Clicking on option");
+                    Chat.stream().textContains("I am an experienced player.").first().select();
+                }
+                ContinueChat();
             }
-            ContinueChat();
         }
-        else if(Condition.wait(() -> ChatContains("Please tap on the flashing spanner icon found on the right side of your screen"), 100, 10))
+        else if(ChatContains("Please tap on the flashing spanner icon found on the right side of your screen"))
         {
             System.out.println("In settings menu text");
             Game.tab(Game.Tab.SETTINGS);
@@ -43,7 +46,6 @@ public class TalkToFirstInstructor extends Task
             TalkToNpc("Gielinor Guide");
             ContinueChat();
         }
-
 
         if(ChatContains("Moving on") || ChatContains("Moving around"))
         {

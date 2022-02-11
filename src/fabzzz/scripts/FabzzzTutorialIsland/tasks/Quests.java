@@ -10,6 +10,7 @@ import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
 public class Quests extends Task
 {
+    private static final int LADDER_ID = 9726;
     @Override
     public boolean activate()
     {
@@ -25,26 +26,27 @@ public class Quests extends Task
             TalkToNpc("Quest Guide");
             ContinueChat();
         }
-        if(ChatContains("flashing icon to the right of your screen."))
+        else if(ChatContains("flashing icon to the right of your screen."))
         {
-            Condition.wait(() -> Game.tab(Game.Tab.QUESTS), 25, 40);
-            Condition.wait(() -> Game.tab() == Game.Tab.QUESTS, 100, 20);
+            Game.tab(Game.Tab.QUESTS);
         }
-
-        if(ChatContains("This is your quest journal."))
+        else if(ChatContains("This is your quest journal."))
         {
             TalkToNpc("Quest Guide");
             ContinueChat();
         }
-        if(ChatContains("Moving on"))
+        else if(ChatContains("Moving on"))
         {
             System.out.println("Clicking on the door");
-            int ladderId = 9726;
-            Objects.stream().id(ladderId).nearest().first().interact("Climb-down");
-            if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
+
+            if (Objects.stream().id(LADDER_ID).nearest().first().interact("Climb-down"))
             {
-                Condition.wait(() -> Areas.DUNGEON_MINING_SMITHING_AREA.contains(Players.local().tile()), 100, 40);
+                if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
+                {
+                    Condition.wait(() -> Areas.DUNGEON_MINING_SMITHING_AREA.contains(Players.local().tile()), 100, 40);
+                }
             }
+
 
         }
     }
