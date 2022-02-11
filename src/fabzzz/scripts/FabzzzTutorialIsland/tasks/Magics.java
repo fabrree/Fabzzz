@@ -39,8 +39,7 @@ public class Magics extends Task
         else if(ChatContains("Open up the magic interface by tapping"))
         {
             System.out.println("Opening magic tab");
-            Game.tab(Game.Tab.MAGIC);
-            Condition.wait(() -> Game.tab() == Game.Tab.MAGIC, 100, 10);
+            OpenGameTab(Game.Tab.MAGIC);
         }
         else if(ChatContains("This is your magic interface. All of your spells"))
         {

@@ -15,7 +15,7 @@ public class Configurations
     public static void OpenGameTab(Game.Tab tabToOpen)
     {
         Game.tab(tabToOpen);
-        Condition.wait(() -> Game.tab() == tabToOpen, 100, 20);
+        Condition.wait(() -> Game.tab() == tabToOpen, 25, 10);
     }
     public static void ContinueChat()
     {

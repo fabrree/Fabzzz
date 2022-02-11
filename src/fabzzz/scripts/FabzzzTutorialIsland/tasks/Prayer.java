@@ -30,8 +30,7 @@ public class Prayer extends Task
         }
         else if(ChatContains("Tap on the flashing icon to open the Prayer menu."))
         {
-            Game.tab(Game.Tab.PRAYER);
-            Condition.wait(() -> Game.tab() == Game.Tab.PRAYER, 100, 10);
+            OpenGameTab(Game.Tab.PRAYER);
         }
         else if(ChatContains("Talk with Brother Brace and he'll tell you about prayers."))
         {
@@ -40,8 +39,7 @@ public class Prayer extends Task
         }
         else if(ChatContains("You should now see another new icon."))
         {
-            Game.tab(Game.Tab.FRIENDS_LIST);
-            Condition.wait(() -> Game.tab() == Game.Tab.FRIENDS_LIST, 100, 20);
+            OpenGameTab(Game.Tab.FRIENDS_LIST);
         }
         else if(ChatContains("These two lists can be very helpful for"))
         {

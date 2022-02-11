@@ -38,8 +38,7 @@ public class TalkToFirstInstructor extends Task
         else if(ChatContains("Please tap on the flashing spanner icon found on the right side of your screen"))
         {
             System.out.println("In settings menu text");
-            Game.tab(Game.Tab.SETTINGS);
-            Condition.wait(() -> Game.tab() == Game.Tab.SETTINGS, 25, 20);
+            OpenGameTab(Game.Tab.SETTINGS);
         }
         else if(ChatContains("variety of game settings."))
         {

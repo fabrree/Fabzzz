@@ -89,8 +89,7 @@ public class Banking extends Task
         else if(ChatContains("to open your Account Management menu."))
         {
             System.out.println("Opening account management tab");
-            Game.tab(Game.Tab.ACCOUNT_MANAGEMENT);
-            Condition.wait(() -> Game.tab() == Game.Tab.ACCOUNT_MANAGEMENT, 100, 20);
+            OpenGameTab(Game.Tab.ACCOUNT_MANAGEMENT);
             System.out.println("Account management tab is open");
         }
         else if(ChatContains("This is your Account Management menu where"))

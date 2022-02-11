@@ -35,7 +35,7 @@ public class Fishing extends Task
         }
         else if(ChatContains("You've been given an item"))
         {
-            Game.tab(Game.Tab.INVENTORY);
+            OpenGameTab(Game.Tab.INVENTORY);
         }
         else if(ChatContains("Catch some shrimp") && Inventory.stream().id(SHRIMP_ID).isEmpty())
         {
@@ -59,7 +59,7 @@ public class Fishing extends Task
         else if(ChatContains("You've gained some experience"))
         {
             System.out.println("going to skills tab ");
-            Game.tab(Game.Tab.STATS);
+            OpenGameTab(Game.Tab.STATS);
         }
         else if(ChatContains("On this menu you can view your skills."))
         {

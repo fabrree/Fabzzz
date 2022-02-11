@@ -28,7 +28,7 @@ public class Quests extends Task
         }
         else if(ChatContains("flashing icon to the right of your screen."))
         {
-            Game.tab(Game.Tab.QUESTS);
+            OpenGameTab(Game.Tab.QUESTS);
         }
         else if(ChatContains("This is your quest journal."))
         {

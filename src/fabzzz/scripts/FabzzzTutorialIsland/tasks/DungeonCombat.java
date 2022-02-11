@@ -54,8 +54,7 @@ public class DungeonCombat extends Task
         }
         else if (ChatContains("You now have access to a new interface."))
         {
-            Game.tab(Game.Tab.EQUIPMENT);
-            Condition.wait(() -> Game.tab() == Game.Tab.EQUIPMENT, 100, 10);
+            OpenGameTab(Game.Tab.EQUIPMENT);
         }
         else if (ChatContains("This is your worn inventory."))
         {
@@ -124,9 +123,7 @@ public class DungeonCombat extends Task
         }
         else if (ChatContains("Tap on the flashing crossed swords icon"))
         {
-            Game.tab(Game.Tab.ATTACK);
-            Condition.wait(() -> Game.tab() == Game.Tab.ATTACK, 100, 10);
-            System.out.println("Do we have tab open? : " + (Game.tab() == Game.Tab.ATTACK));
+            OpenGameTab(Game.Tab.ATTACK);
         }
         else if (ChatContains("This is your combat interface."))
         {
@@ -219,8 +216,7 @@ public class DungeonCombat extends Task
         {
             if (CHECK_FOR_EQUIPMENT)
             {
-                Game.tab(Game.Tab.EQUIPMENT);
-                Condition.wait(() -> Game.tab() == Game.Tab.EQUIPMENT, 100, 10);
+                OpenGameTab(Game.Tab.EQUIPMENT);
                 System.out.println("Do we have  equipment tab open? : " + (Game.tab() == Game.Tab.EQUIPMENT));
             }
             CHECK_FOR_EQUIPMENT = true;
