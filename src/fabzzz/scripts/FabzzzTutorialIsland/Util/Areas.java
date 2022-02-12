@@ -5,6 +5,12 @@ import org.powbot.api.Tile;
 
 public class Areas
 {
+
+    public static Area LUMBRIDGE = new Area(
+            new Tile(3218, 3244, 0),
+            new Tile(3247, 3202, 0)
+    );
+
     public static Tile MAGIC_KILL_CHICKEN_SPOT  = new Tile(3139, 3091, 0);
 
     public static Area MAGIC_AREA = new Area(

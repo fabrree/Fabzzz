@@ -93,10 +93,6 @@ public class Magics extends Task
                 ContinueChat();
             }
         }
-        else if(!Areas.MAGIC_AREA.contains(Players.local().tile()))
-        {
-            Game.logout();
-            ScriptManager.INSTANCE.stop();
-        }
+
     }
 }

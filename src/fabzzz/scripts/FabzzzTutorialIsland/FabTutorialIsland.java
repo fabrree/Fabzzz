@@ -100,6 +100,7 @@ public class FabTutorialIsland extends AbstractScript
         tasklist.add(new Prayer());
         tasklist.add(new GoInsideMagicBuilding());
         tasklist.add(new Magics());
+        tasklist.add(new LumbridgeLogout());
         System.out.println("OnStart() finished");
     }
 
