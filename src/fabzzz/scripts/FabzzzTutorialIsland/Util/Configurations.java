@@ -35,10 +35,17 @@ public class Configurations
         var npc = Npcs.stream().name(npcName).nearest().first();
         if (npc.inViewport()) {
             System.out.println("TalkToNpc() -> " +npcName + " found! -> in viewport");
-            npc.interact("Talk-to", npcName);
-            if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
+            if(npc.interact("Talk-to", npcName))
             {
-                Condition.wait(() -> !Players.local().inMotion(), 100, 100);
+                if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
+                {
+                    Condition.wait(() -> !Players.local().inMotion(), 100, 100);
+                }
+            }
+            else
+            {
+                System.out.println("Can't interact.. turning camera");
+                TurnCamera();
             }
         }
         else
