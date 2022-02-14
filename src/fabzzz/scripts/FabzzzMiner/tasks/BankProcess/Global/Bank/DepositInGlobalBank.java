@@ -16,7 +16,7 @@ public class DepositInGlobalBank extends Task
     public boolean activate()
     {
         System.out.println("Deposit -> activate");
-        return Bank.nearest().tile().distanceTo(Players.local()) < 5 && Inventory.isFull();
+        return Bank.nearest().tile().distanceTo(Players.local()) < 7 && Inventory.isFull();
     }
 
     @Override
