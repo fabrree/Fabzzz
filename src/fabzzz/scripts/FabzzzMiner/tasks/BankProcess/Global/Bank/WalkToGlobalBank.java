@@ -1,4 +1,4 @@
-package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global;
+package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.Bank;
 import fabzzz.scripts.FabzzzMiner.tasks.Task;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.Bank;
@@ -20,12 +20,6 @@ public class WalkToGlobalBank extends Task {
     public void execute() {
         System.out.println("WalkToBankGLOBAL -> execute -> Walking to bank");
         Movement.moveToBank();
-        if(Condition.wait(() -> Players.local().inMotion(), 50, 20))
-        {
-            System.out.println("WalkToBank() -> execute -> inside if");
-            Condition.wait(() -> !Players.local().inMotion(), 150, 40);
-        }
     }
-
 
 }

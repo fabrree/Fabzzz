@@ -17,12 +17,8 @@ public class WalkToSelectedBank extends Task {
     @Override
     public void execute() {
         System.out.println("WalkToBank -> execute -> Walking to bank");
+        Movement.moveTo(BANK.getRandomTile());
         Movement.builder(BANK.getRandomTile()).setRunMin(35).setRunMax(75).move();
-        if(Condition.wait(() -> Players.local().inMotion(), 50, 20))
-        {
-            System.out.println("WalkToBank() -> execute -> inside if");
-            Condition.wait(() -> !Players.local().inMotion(), 200, 100);
-        }
     }
 
 

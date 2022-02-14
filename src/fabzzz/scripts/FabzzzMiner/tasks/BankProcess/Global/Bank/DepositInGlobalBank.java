@@ -1,14 +1,14 @@
-package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global;
+package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.Bank;
 
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Pickaxe.Pickaxe;
+import fabzzz.scripts.FabzzzMiner.Utils.Pickaxe;
 import fabzzz.scripts.FabzzzMiner.tasks.Task;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.Bank;
+import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Inventory;
 import org.powbot.api.rt4.Players;
 
-import static fabzzz.scripts.FabzzzMiner.Configuration.TurnCamera;
-import static fabzzz.scripts.FabzzzMiner.Configuration.USE_BEST_PICKAXE_BANK;
+import static fabzzz.scripts.FabzzzMiner.Utils.Configuration.USE_BEST_PICKAXE_BANK;
 
 public class DepositInGlobalBank extends Task
 {
@@ -31,7 +31,7 @@ public class DepositInGlobalBank extends Task
         else
         {
             System.out.println("Depositbox not in viewport... turning camera");
-            TurnCamera();
+            Camera.turnTo(Bank.nearest());
         }
 
         if (Bank.opened())

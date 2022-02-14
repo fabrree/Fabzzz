@@ -1,8 +1,7 @@
 package fabzzz.scripts.FabzzzMiner.tasks;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
-import static fabzzz.scripts.FabzzzMiner.Configuration.TILES_AWAY;
-import static fabzzz.scripts.FabzzzMiner.Configuration.TurnCamera;
+import static fabzzz.scripts.FabzzzMiner.Utils.Configuration.TILES_AWAY;
 
 public class MineOre extends Task
 {
@@ -32,13 +31,13 @@ public class MineOre extends Task
                 else
                 {
                     System.out.println("Couldn't interact with the ore to mine... turning camera!");
-                    TurnCamera();
+                    Camera.turnTo(rock);
                 }
             }
             else
             {
                 System.out.println("Rock not in viewport... turning camera");
-                TurnCamera();
+                Camera.turnTo(rock);
             }
         }
     }

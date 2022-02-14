@@ -1,10 +1,10 @@
 package fabzzz.scripts.FabzzzMiner;
 import fabzzz.scripts.FabzzzMiner.tasks.*;
 import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.*;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositInGlobalDepositBox;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositInGlobalBank;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.WalkToGlobalBank;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.WalkToGlobalDespositBox;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositBox.DepositInGlobalDepositBox;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.Bank.DepositInGlobalBank;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.Bank.WalkToGlobalBank;
+import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Global.DepositBox.WalkToGlobalDespositBox;
 import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.DepositSelectedBank;
 import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToSelectedBank;
 import org.powbot.api.rt4.*;
@@ -14,7 +14,7 @@ import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackSkillOption;
 import org.powbot.mobile.service.ScriptUploader;
-import static fabzzz.scripts.FabzzzMiner.Configuration.*;
+import static fabzzz.scripts.FabzzzMiner.Utils.Configuration.*;
 
 /*
 2nd feb
@@ -189,7 +189,7 @@ public class FabzzzMiner extends AbstractScript {
             if(task.activate())
             {
                 task.execute();
-                return;
+              //  return;
             }
         }
     }
@@ -200,12 +200,11 @@ public class FabzzzMiner extends AbstractScript {
         Paint Monet = PaintBuilder.newBuilder()
                 .trackSkill(Skill.Mining, "Xp gained", TrackSkillOption.Exp)
                 .trackSkill(Skill.Mining, "Level", TrackSkillOption.LevelProgressBar)
-                .y(100) //45
+                .y(100)  //45
                 .x(100)  //55
                 .build();
         addPaint(Monet);
     }
-
 }
 
 //    List<GameObject> rocks = new ArrayList<>();

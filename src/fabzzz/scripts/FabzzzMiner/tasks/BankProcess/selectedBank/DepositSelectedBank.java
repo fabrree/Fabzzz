@@ -1,11 +1,10 @@
 package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank;
-import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Pickaxe.Pickaxe;
+import fabzzz.scripts.FabzzzMiner.Utils.Pickaxe;
 import fabzzz.scripts.FabzzzMiner.tasks.Task;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 
-import static fabzzz.scripts.FabzzzMiner.Configuration.TurnCamera;
-import static fabzzz.scripts.FabzzzMiner.Configuration.USE_BEST_PICKAXE_BANK;
+import static fabzzz.scripts.FabzzzMiner.Utils.Configuration.USE_BEST_PICKAXE_BANK;
 import static fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToSelectedBank.BANK;
 
 public class DepositSelectedBank extends Task
@@ -28,7 +27,7 @@ public class DepositSelectedBank extends Task
         else
         {
             System.out.println("Bank not in viewport... turning camera");
-            TurnCamera();
+            Camera.turnTo(Bank.nearest());
         }
         if (Bank.opened())
         {

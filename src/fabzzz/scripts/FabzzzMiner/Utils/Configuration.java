@@ -1,40 +1,15 @@
-package fabzzz.scripts.FabzzzMiner;
+package fabzzz.scripts.FabzzzMiner.Utils;
 
 import fabzzz.scripts.FabzzzMiner.tasks.BankProcess.selectedBank.WalkToSelectedBank;
 import fabzzz.scripts.FabzzzMiner.tasks.MineOre;
 import org.powbot.api.Area;
 import org.powbot.api.Tile;
-import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.rt4.Inventory;
 import org.powbot.api.rt4.Item;
 import org.powbot.api.rt4.walking.model.Skill;
 
-import java.util.Random;
-
 public class Configuration {
-
-    public static void TurnCamera()
-    {
-        Random r = new Random();
-        var yaw = Camera.yaw();
-        if(r.nextBoolean())
-        {
-            int high = yaw + 150;
-            int low = yaw + 80;
-            int result = r.nextInt(high-low) + low;
-            Camera.pitch(true);
-            Camera.angle(result);
-        }
-        else
-        {
-            int high = yaw - 80;
-            int low = yaw - 150;
-            int result = r.nextInt(high-low) + low;
-            Camera.pitch(true);
-            Camera.angle(result);
-        }
-    }
 
     public static Tile STARTING_TILE;
     public static int TILES_AWAY;

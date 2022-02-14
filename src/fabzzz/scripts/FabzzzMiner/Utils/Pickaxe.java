@@ -1,4 +1,4 @@
-package fabzzz.scripts.FabzzzMiner.tasks.BankProcess.Pickaxe;
+package fabzzz.scripts.FabzzzMiner.Utils;
 
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
