@@ -13,7 +13,7 @@ public class WalkToGlobalBank extends Task {
     @Override
     public boolean activate() {
         System.out.println("WalkToBankGLOBAL -> activate");
-        return !(Bank.nearest().tile().distanceTo(Players.local()) < 5) && Inventory.isFull();
+        return !(Bank.nearest().tile().distanceTo(Players.local()) < 8) && Inventory.isFull();
     }
 
     @Override

@@ -10,8 +10,7 @@ public class WalkToGlobalDespositBox extends Task {
     @Override
     public boolean activate() {
         System.out.println("WalkToDepositBoxGLOBAL -> activate");
-        return !(DepositBox.INSTANCE.getDepositBox().tile().distanceTo(Players.local().tile()) < 5) && Inventory.isFull();
-
+        return !(DepositBox.INSTANCE.getDepositBox().tile().distanceTo(Players.local().tile()) < 8) && Inventory.isFull();
     }
 
     @Override
@@ -20,6 +19,4 @@ public class WalkToGlobalDespositBox extends Task {
         var depositBox = getClosestDepositBox();
         Movement.moveTo(depositBox);
     }
-
-
 }

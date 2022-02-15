@@ -34,8 +34,8 @@ public enum DepositBoxes
 
             if (distance< closestLocation)
             {
+                System.out.println("New shortest distance!");
                 closestLocation = distance;
-                System.out.println("New shortest distance: " + finalLocation);
                 finalLocation = location.depositBox;
             }
         }
