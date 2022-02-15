@@ -13,8 +13,6 @@ public class SetUsername extends Task
 {
     private static final int setDisplayNameScreen = 558;
     private static final int textbox = 12;
-    private ComponentStream stream;
-
 
     @Override
     public boolean activate()
@@ -54,10 +52,9 @@ public class SetUsername extends Task
                 System.out.println("Setting username!");
                 if(Components.stream(setDisplayNameScreen).text("Set name").viewable().isNotEmpty())
                 {
-                    if(Components.stream(setDisplayNameScreen).text("Set name").first().click())
-                    {
-                        Condition.wait(() -> Components.stream(TEXT_SCREEN).textContains("appearance").isNotEmpty(), 100, 30);
-                    }
+                    Components.stream(setDisplayNameScreen).text("Set name").first().click();
+                    System.out.println("Waiting for appearance menu to open..");
+                    Condition.wait(() -> Components.stream(TEXT_SCREEN).textContains("appearance").isNotEmpty(), 500, 4);
                 }
             }
             else if(Components.stream(setDisplayNameScreen).text("Sorry").viewable().isNotEmpty())

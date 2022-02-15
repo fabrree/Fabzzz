@@ -90,11 +90,18 @@ public class DungeonMiningSmithing extends Task
         }
         else if(ChatContains("You now have some tin ore and some copper ore."))
         {
-            GameObject range = Objects.stream().name("Furnace").first();
-            var currentSmithingXp = Skill.Smithing.experience();
-            range.interact("Use", "Furnace");
-            PlayerIsMoving(40); //walking to the furnace
-            Condition.wait(() ->Skill.Smithing.experience() > currentSmithingXp, 50, 60); // smelthing ore in furnace -> wait for xp drop
+            GameObject furnace = Objects.stream().name("Furnace").first();
+            if(furnace.inViewport())
+            {
+                var currentSmithingXp = Skill.Smithing.experience();
+                furnace.interact("Use", "Furnace");
+                PlayerIsMoving(40); //walking to the furnace
+                Condition.wait(() ->Skill.Smithing.experience() > currentSmithingXp, 50, 60); // smelthing ore in furnace -> wait for xp drop
+            }
+            else
+            {
+                Camera.turnTo(furnace);
+            }
         }
         else if(ChatContains("You've made a bronze bar!"))
         {

@@ -15,13 +15,14 @@ public class SetAppearance extends Task
     @Override
     public boolean activate()
     {
-        System.out.println("Set appearance activate");
-        return Components.stream().widget(TEXT_SCREEN).textContains("appearance").isNotEmpty();
+        System.out.println("Set appearance -> activate");
+        return ChatContains("Before you get started, you'll need to set the appearance of your character.");
     }
 
     @Override
     public void execute()
     {
+        System.out.println("Set appearance -> execute");
         if(!GENDER_SELECTED)
         {
             if(r.nextBoolean())
