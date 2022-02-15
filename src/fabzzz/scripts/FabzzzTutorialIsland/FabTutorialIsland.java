@@ -114,6 +114,7 @@ public class FabTutorialIsland extends AbstractScript
         {
             if(task.activate())
             {
+                status = task.status();
                 task.execute();
                 return;
             }
