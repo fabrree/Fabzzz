@@ -41,18 +41,25 @@ public class DungeonMiningSmithing extends Task
             {
                 System.out.println("Walking to mining instructor");
                 Movement.moveTo(Areas.MINING_INSTRUCTOR_AREA.getRandomTile());
-                PlayerIsMoving(150);
             }
         }
         else if(ChatContains("It's quite simple really. To mine a rock,"))
         {
             GameObject tinOre = Objects.stream().id(TIN_ORE_ID).nearest().first();
-            if (tinOre.valid() && tinOre.inViewport()) {
-                System.out.println("Mining white ore");
-                tinOre.interact("Mine");
-                PlayerIsMoving(60);
-                Condition.wait(() -> !tinOre.valid(), 150, 60);
+            if (tinOre.inViewport()) {
+                if(tinOre.valid())
+                {
+                    System.out.println("Mining white ore");
+                    tinOre.interact("Mine");
+                    PlayerIsMoving(60);
+                    Condition.wait(() -> !tinOre.valid(), 150, 60);
+                }
             }
+            else
+            {
+                Camera.turnTo(tinOre);
+            }
+
         }
         else if(ChatContains("You manage to mine some tin."))
         {
@@ -63,15 +70,18 @@ public class DungeonMiningSmithing extends Task
         {
             System.out.println("Going to mine copper");
             GameObject copperOre = Objects.stream().id(COPPER_ORE_ID).nearest().first();
-            if (copperOre.valid() && copperOre.inViewport()) {
-                System.out.println("Mining white ore");
-                copperOre.interact("Mine");
-                PlayerIsMoving(60);
-                Condition.wait(() -> !copperOre.valid(), 150, 60);
+            if(copperOre.inViewport())
+            {
+                if (copperOre.valid()) {
+                    System.out.println("Mining white ore");
+                    copperOre.interact("Mine");
+                    PlayerIsMoving(60);
+                    Condition.wait(() -> !copperOre.valid(), 150, 60);
+                }
             }
             else
             {
-                TurnCamera();
+                Camera.turnTo(copperOre);
             }
         }
         else if(ChatContains("You manage to mine some copper"))
@@ -107,7 +117,7 @@ public class DungeonMiningSmithing extends Task
             }
             else
             {
-                TurnCamera();
+                Camera.turnTo(anvil);
             }
         }
         else if(ChatContains("Now you have the smithing menu open,"))
@@ -131,7 +141,7 @@ public class DungeonMiningSmithing extends Task
                 }
                 else
                 {
-                    TurnCamera();
+                    Camera.turnTo(anvil);
                 }
             }
         }
@@ -150,7 +160,7 @@ public class DungeonMiningSmithing extends Task
                 }
                 else
                 {
-                    TurnCamera();
+                    Camera.turnTo(ladder);
                 }
 
             }

@@ -30,7 +30,13 @@ public class Banking extends Task
             if (Bank.inViewport())
             {
                 System.out.println("Opening bank");
-                Condition.wait(() -> Bank.open(), 50, 10);
+                // Condition.wait(() -> Bank.open(), 50, 10);
+                Bank.open();
+            }
+            else
+            {
+                System.out.println("Turning camera to bank");
+                Camera.turnTo(Bank.nearest());
             }
         }
 
@@ -51,7 +57,7 @@ public class Banking extends Task
                 else
                 {
                     System.out.println("Poll booth not in viewport.. turning camera");
-                    TurnCamera();
+                    Camera.turnTo(pollBooth);
                 }
             }
         }
@@ -59,19 +65,18 @@ public class Banking extends Task
         {
             if(Areas.BANK_FIRST_DOOR.tile().equals(Players.local().tile()))
             {
-
                 GameObject door = Objects.stream().id(BANK_FIRST_DOOR_ID).nearest().first();
                 if(door.inViewport())
                 {
                     door.interact("Open", "Door");
+                    if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
+                    {
+                        Condition.wait(() -> Areas.BANK_AREA_SECOND.contains(Players.local().tile()), 100, 50);
+                    }
                 }
                 else
                 {
-                    TurnCamera();
-                }
-                if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
-                {
-                    Condition.wait(() -> Areas.BANK_AREA_SECOND.contains(Players.local().tile()), 100, 50);
+                    Camera.turnTo(door);
                 }
             }
             else
@@ -111,7 +116,7 @@ public class Banking extends Task
             }
             else
             {
-                TurnCamera();
+                Camera.turnTo(door);
             }
         }
     }

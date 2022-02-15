@@ -45,13 +45,13 @@ public class Configurations
             else
             {
                 System.out.println("Can't interact.. turning camera");
-                TurnCamera();
+                Camera.turnTo(npc);
             }
         }
         else
         {
             System.out.println("TalkToNpc() -> Turning camera to find NPC");
-            TurnCamera();
+            Camera.turnTo(npc);
         }
     }
 
@@ -60,28 +60,6 @@ public class Configurations
         if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
         {
             Condition.wait(() -> !Players.local().inMotion(), 100, maxWaitTimeX100MS);
-        }
-    }
-
-    public static void TurnCamera()
-    {
-        Random r = new Random();
-        var yaw = Camera.yaw();
-        if(r.nextBoolean())
-        {
-            int high = yaw + 150;
-            int low = yaw + 80;
-            int result = r.nextInt(high-low) + low;
-            Camera.pitch(true);
-            Camera.angle(result);
-        }
-        else
-        {
-            int high = yaw - 80;
-            int low = yaw - 150;
-            int result = r.nextInt(high-low) + low;
-            Camera.pitch(true);
-            Camera.angle(result);
         }
     }
 }

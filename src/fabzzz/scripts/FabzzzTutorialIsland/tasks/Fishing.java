@@ -40,16 +40,16 @@ public class Fishing extends Task
         else if(ChatContains("Catch some shrimp") && Inventory.stream().id(SHRIMP_ID).isEmpty())
         {
             System.out.println("going to fish");
-            var npc = Npcs.stream().filtered(x -> x.name().contains("Fishing spot")).nearest().first();
-            if (npc.inViewport()) {
-                System.out.println(npc.name() + " fishing spot found! -> in viewport");
-                npc.interact("Net");
+            var fishingSpot = Npcs.stream().filtered(x -> x.name().contains("Fishing spot")).nearest().first();
+            if (fishingSpot.inViewport()) {
+                System.out.println(fishingSpot.name() + " fishing spot found! -> in viewport");
+                fishingSpot.interact("Net");
                 PlayerIsMoving(30); //moving to fishing spot
                 Condition.wait(() -> Inventory.stream().id(SHRIMP_ID).isNotEmpty(), 100, 80); // fishing until fish
             }
             else
             {
-                TurnCamera();
+                Camera.turnTo(fishingSpot);
             }
         }
         else if(ChatContains("You manage to catch some shrimp."))
@@ -73,12 +73,15 @@ public class Fishing extends Task
                 tree.interact("Chop down", "Tree");
                 Condition.wait(() -> Objects.stream().at(tree.tile()).id(9730).isEmpty(), 150, 50);
             }
+            else
+            {
+                Camera.turnTo(tree);
+            }
             ContinueChat();
         }
         else if(ChatContains("Now that you have some logs,"))
         {
             System.out.println("Making fire");
-
             GameObject fire = Objects.stream().id(FIRE_ID).nearest().first();
             System.out.println("Fire tile = " + fire.tile());
             System.out.println("Player tile = " + Players.local().tile());
@@ -151,7 +154,7 @@ public class Fishing extends Task
                 }
                 else
                 {
-                    TurnCamera();
+                    Camera.turnTo(gate);
                 }
             }
             else

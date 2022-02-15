@@ -46,7 +46,8 @@ public class DungeonCombat extends Task
                 TalkToNpc("Combat Instructor");
                 PlayerIsMoving(20);
                 ContinueChat();
-            } else
+            }
+            else
             {
                 Movement.moveTo(Areas.DUNGEON_COMBAT_INSTRUCTOR.getRandomTile());
                 PlayerIsMoving(60);
@@ -69,7 +70,6 @@ public class DungeonCombat extends Task
         else if (ChatContains("You can see what items you are wearing in the worn"))
         {
             System.out.println("Going to open equipment and hold dagger");
-
             if (Components.stream().widget(EQUIPMENT_FULL_SCREEN).textContains("Equip Your Character...").isNotEmpty())
             {
                 System.out.println("Equip your character... screen is open -> clicking dagger");
@@ -137,7 +137,8 @@ public class DungeonCombat extends Task
                     System.out.println("Moving to the door and opening it");
                     Condition.wait(() -> Areas.DUNGEON_INSIDE_RAT_CAGE.contains(Players.local().tile()), 100, 40);
                 }
-            } else
+            }
+            else
             {
                 Movement.moveTo(Areas.DUNGEON_OUTSIDE_RAT_DOOR.getRandomTile());
                 System.out.println("Moving to: Dungeon outside rat door");
@@ -166,7 +167,7 @@ public class DungeonCombat extends Task
                 }
                 else
                 {
-                    TurnCamera();
+                    Camera.turnTo(giantRat);
                 }
             }
         }
@@ -179,16 +180,19 @@ public class DungeonCombat extends Task
                     TalkToNpc("Combat Instructor");
                     PlayerIsMoving(20);
                     ContinueChat();
-                } else
+                }
+                else
                 {
                     Movement.moveTo(Areas.DUNGEON_COMBAT_INSTRUCTOR.getRandomTile());
                     PlayerIsMoving(60);
                 }
-            } else if (Areas.DUNGEON_COMBAT_AREA.contains(Players.local().tile()))
+            }
+            else if (Areas.DUNGEON_COMBAT_AREA.contains(Players.local().tile()))
             {
                 Movement.moveTo(Areas.DUNGEON_COMBAT_INSTRUCTOR.getRandomTile());
                 PlayerIsMoving(50);
-            } else if (Areas.DUNGEON_INSIDE_RAT_CAGE.contains(Players.local().tile()))
+            }
+            else if (Areas.DUNGEON_INSIDE_RAT_CAGE.contains(Players.local().tile()))
             {
                 if (Areas.DUNGEON_INSIDE_RAT_DOOR.contains(Players.local().tile()))
                 {
@@ -258,7 +262,7 @@ public class DungeonCombat extends Task
                 }
                 else
                 {
-                    TurnCamera();
+                    Camera.turnTo(giantRat);
                 }
             } else
             {
@@ -279,7 +283,7 @@ public class DungeonCombat extends Task
                 }
                 else
                 {
-                    TurnCamera();
+                    Camera.turnTo(ladder);
                 }
             }
             else

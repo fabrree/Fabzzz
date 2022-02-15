@@ -59,7 +59,7 @@ public class Prayer extends Task
                 }
                 else
                 {
-                    TurnCamera();
+                    Camera.turnTo(door);
                 }
             }
             else

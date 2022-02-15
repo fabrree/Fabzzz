@@ -26,7 +26,6 @@ public class Magics extends Task
         {
             if(Areas.MAGIC_AREA.contains(Players.local().tile()))
             {
-
                 TalkToNpc("Magic Instructor");
                 ContinueChat();
             }

@@ -25,14 +25,6 @@ public class GoInsideMagicBuilding extends Task
         {
             System.out.println("Walking into magic house...");
             Movement.moveTo(Areas.MAGIC_AREA.getRandomTile());
-            if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
-            {
-                Condition.wait(() -> Areas.MAGIC_AREA.contains(Players.local().tile()), 100, 120);
-            }
-
         }
-
-
-
     }
 }

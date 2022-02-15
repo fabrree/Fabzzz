@@ -26,7 +26,6 @@ public class SetUsername extends Task
     public void execute()
     {
         System.out.println("Execute -> SetUsername with name: " + USERNAME);
-        stream = Components.stream(setDisplayNameScreen);
         if (Components.stream(setDisplayNameScreen).text("*").first().text().equals("*"))
         {
             System.out.println("Click on username text box");

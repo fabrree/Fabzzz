@@ -56,6 +56,10 @@ public class TalkToFirstInstructor extends Task
                 door.interact("Open");
                 PlayerIsMoving(60);
             }
+            else
+            {
+                Camera.turnTo(door);
+            }
             System.out.println("Door is opened!");
         }
     }

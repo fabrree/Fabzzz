@@ -33,7 +33,6 @@ public class Cooking extends Task
             System.out.println("Making dough...");
             if (Game.tab(Game.Tab.INVENTORY))
             {
-
                 Item potOfFlour = Inventory.stream().name("Pot of flour").first();
                 Item bucketOfWater = Inventory.stream().name("Bucket of water").first();
                 if (Inventory.selectedItem().id() == -1)
@@ -63,10 +62,8 @@ public class Cooking extends Task
             }
             else
             {
-                TurnCamera();
+                Camera.turnTo(range);
             }
-
-
         }
         else if(ChatContains("Moving on"))
         {

@@ -23,7 +23,6 @@ public class GoInsideBankBuilding extends Task
         {
             System.out.println("Walking to bank");
             Movement.moveTo(Areas.BANK_INSIDE_TOWALK.getRandomTile());
-            PlayerIsMoving(60);
         }
     }
 }

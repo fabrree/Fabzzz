@@ -29,13 +29,15 @@ public class GoInsideQuestBuilding extends Task
             if(Areas.DOOR_IN_FRONT_OF_QUEST.contains(Players.local().tile()))
             {
                 System.out.println("Clicking on the door");
-                Objects.stream().id(DOOR_ID).nearest().first().interact("Open");
-                Condition.wait(() -> Areas.QUEST_AREA.contains(Players.local().tile()), 50, 60);
-            } else
+                if(Objects.stream().id(DOOR_ID).nearest().first().interact("Open"))
+                {
+                    Condition.wait(() -> Areas.QUEST_AREA.contains(Players.local().tile()), 50, 60);
+                }
+            }
+            else
             {
                 System.out.println("Walking to quest building");
                 Movement.moveTo(Areas.DOOR_IN_FRONT_OF_QUEST.getRandomTile());
-                PlayerIsMoving(200);
             }
         }
     }

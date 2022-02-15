@@ -26,16 +26,15 @@ public class SetAppearance extends Task
         {
             if(r.nextBoolean())
             {
-                    //we do not have to select since we are male by default.
-                    IS_FEMALE = false;
-                    GENDER_SELECTED = true;
+                //we do not have to select since we are male by default.
+                IS_FEMALE = false;
+                GENDER_SELECTED = true;
             }
             else
             {
                 if(Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Female").isNotEmpty())
                 {
                     System.out.println("Selecting female");
-
                     Components.stream().widget(APPEARENCE_MENU_WIDGET).text("Female").viewable().first().click();
                     IS_FEMALE = true;
                     GENDER_SELECTED = true;

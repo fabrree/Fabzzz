@@ -23,7 +23,6 @@ public class GoInsidePrayerBuilding extends Task
         {
             System.out.println("Walking into prayer house...");
             Movement.moveTo(Areas.PRAYER_AREA_SMALL.getRandomTile());
-            PlayerIsMoving(80);
         }
 
     }

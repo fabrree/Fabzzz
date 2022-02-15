@@ -19,11 +19,6 @@ public class GoInsideCookingBuilding extends Task
     @Override
     public void execute()
     {
-        if(!Areas.DOOR_IN_FRONT_OF_COOKING.contains(Players.local().tile()))
-        {
-            Movement.step(Areas.DOOR_IN_FRONT_OF_COOKING.getRandomTile());
-            PlayerIsMoving(100);
-        }
         if(Areas.DOOR_IN_FRONT_OF_COOKING.contains(Players.local().tile()))
         {
             GameObject door = Objects.stream().id(DOOR_ID).nearest().first();
@@ -34,8 +29,13 @@ public class GoInsideCookingBuilding extends Task
             }
             else
             {
-                TurnCamera();
+                Camera.turnTo(door);
             }
+        }
+        else
+        {
+            Movement.moveTo(Areas.DOOR_IN_FRONT_OF_COOKING.getRandomTile());
+//            PlayerIsMoving(100);
         }
     }
 }
