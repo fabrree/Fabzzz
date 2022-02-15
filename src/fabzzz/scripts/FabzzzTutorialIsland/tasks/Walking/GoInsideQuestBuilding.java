@@ -41,4 +41,9 @@ public class GoInsideQuestBuilding extends Task
             }
         }
     }
+    @Override
+    public String status()
+    {
+        return "Going to quest building";
+    }
 }

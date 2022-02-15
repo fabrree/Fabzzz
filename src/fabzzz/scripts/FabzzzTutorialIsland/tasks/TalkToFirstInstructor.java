@@ -63,4 +63,9 @@ public class TalkToFirstInstructor extends Task
             System.out.println("Door is opened!");
         }
     }
+    @Override
+    public String status()
+    {
+        return "Talking to first instructor";
+    }
 }

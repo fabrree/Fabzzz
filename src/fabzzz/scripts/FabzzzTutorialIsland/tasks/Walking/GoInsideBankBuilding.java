@@ -25,4 +25,10 @@ public class GoInsideBankBuilding extends Task
             Movement.moveTo(Areas.BANK_INSIDE_TOWALK.getRandomTile());
         }
     }
+
+    @Override
+    public String status()
+    {
+        return "Going to bank building";
+    }
 }

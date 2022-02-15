@@ -38,4 +38,9 @@ public class GoInsideCookingBuilding extends Task
 //            PlayerIsMoving(100);
         }
     }
+    @Override
+    public String status()
+    {
+        return "Going to cooking building";
+    }
 }

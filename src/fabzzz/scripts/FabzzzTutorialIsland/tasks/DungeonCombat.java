@@ -294,4 +294,9 @@ public class DungeonCombat extends Task
         }
 
     }
+    @Override
+    public String status()
+    {
+        return "Dungeon combat part";
+    }
 }

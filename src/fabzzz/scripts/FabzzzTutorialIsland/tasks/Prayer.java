@@ -72,4 +72,9 @@ public class Prayer extends Task
             }
         }
     }
+    @Override
+    public String status()
+    {
+        return "Prayer part";
+    }
 }

@@ -55,7 +55,9 @@ import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 public class FabTutorialIsland extends AbstractScript
 {
     private final ArrayList<Task> tasklist = new ArrayList<>();
-        public static void main(String[] args) {
+    public static String status = "";
+
+    public static void main(String[] args) {
             new ScriptUploader().uploadAndStart("FAB Tutorial island", "Freek", "127.0.0.1:5585", true, false);
         }
 
@@ -121,6 +123,7 @@ public class FabTutorialIsland extends AbstractScript
     private void PaintUI()
     {
         Paint Monet = PaintBuilder.newBuilder()
+                .addString("Status: ", () -> status)
                 .y(100)
                 .x(100)
                 .build();

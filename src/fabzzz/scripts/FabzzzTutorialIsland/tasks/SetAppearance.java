@@ -69,5 +69,12 @@ public class SetAppearance extends Task
                 Condition.wait(() -> Components.stream().widget(TEXT_SCREEN).textContains("Getting started").isNotEmpty(), 100, 80);
             }
         }
+
+    }
+
+    @Override
+    public String status()
+    {
+        return "Setting appearance";
     }
 }

@@ -27,4 +27,9 @@ public class GoInsideMagicBuilding extends Task
             Movement.moveTo(Areas.MAGIC_AREA.getRandomTile());
         }
     }
+    @Override
+    public String status()
+    {
+        return "Going to magic building";
+    }
 }

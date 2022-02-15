@@ -94,4 +94,9 @@ public class Magics extends Task
         }
 
     }
+    @Override
+    public String status()
+    {
+        return "Magic part";
+    }
 }

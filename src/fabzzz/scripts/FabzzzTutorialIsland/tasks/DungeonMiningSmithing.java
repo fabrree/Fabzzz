@@ -182,4 +182,9 @@ public class DungeonMiningSmithing extends Task
         }
 
     }
+    @Override
+    public String status()
+    {
+        return "Dungeon mining/smithing part";
+    }
 }

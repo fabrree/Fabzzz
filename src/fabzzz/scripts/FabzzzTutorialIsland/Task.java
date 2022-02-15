@@ -7,4 +7,6 @@ public abstract class Task
 
     public abstract void execute();
 
+    public abstract String status();
+
 }

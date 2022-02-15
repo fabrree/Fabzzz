@@ -165,4 +165,9 @@ public class Fishing extends Task
             }
         }
     }
+    @Override
+    public String status()
+    {
+        return "Fishing part";
+    }
 }

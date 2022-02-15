@@ -86,4 +86,9 @@ public class Cooking extends Task
             }
         }
     }
+    @Override
+    public String status()
+    {
+        return "Cooking part";
+    }
 }

@@ -50,4 +50,9 @@ public class Quests extends Task
 
         }
     }
+    @Override
+    public String status()
+    {
+        return "Quest part";
+    }
 }

@@ -130,4 +130,9 @@ public class SetUsername extends Task
             }
         }
     }
+    @Override
+    public String status()
+    {
+        return "Setting username";
+    }
 }

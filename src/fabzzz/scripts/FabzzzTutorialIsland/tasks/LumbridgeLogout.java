@@ -25,4 +25,9 @@ public class LumbridgeLogout extends Task
         Game.logout();
         ScriptManager.INSTANCE.stop();
     }
+    @Override
+    public String status()
+    {
+        return "Logging out";
+    }
 }

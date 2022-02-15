@@ -26,4 +26,9 @@ public class GoInsidePrayerBuilding extends Task
         }
 
     }
+    @Override
+    public String status()
+    {
+        return "Going to prayer building";
+    }
 }
