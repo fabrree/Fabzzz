@@ -3,6 +3,7 @@ package fabzzz.scripts.FabzzzTutorialIsland.Util;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 
+import java.util.List;
 import java.util.Random;
 
 public class Configurations
@@ -11,7 +12,9 @@ public class Configurations
     public static final int TEXT_SCREEN = 263;
     public static String USERNAME = "Dragon";
     public static boolean IRON_MAN;
-
+    public static final int GATE_ID_RATS = 9719;
+    public static final String GIANT_RAT = "Giant rat";
+    public  static final int EQUIPMENT_FULL_SCREEN = 84;
     public static void OpenGameTab(Game.Tab tabToOpen)
     {
         Game.tab(tabToOpen);
@@ -29,6 +32,23 @@ public class Configurations
     {
         return Components.stream().widget(TEXT_SCREEN).textContains(text).isNotEmpty();
     }
+
+    public static boolean AnyOfMultipleChatsContains(List<String> texts)
+    {
+        //var textOnScreen = Components.stream().widget(TEXT_SCREEN);
+        for (var text : texts)
+        {
+            System.out.println("Check text: " + text);
+        //    if(textOnScreen.textContains(text).isNotEmpty())
+            if(Components.stream().widget(TEXT_SCREEN).textContains(text).isNotEmpty())
+            {
+                System.out.println("RETURN TRUE");
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void TalkToNpc(String npcName)
     {
         System.out.println("TalkToNpc() -> Looking for" + npcName);

@@ -1,12 +1,13 @@
 package fabzzz.scripts.FabzzzTutorialIsland;
-import fabzzz.scripts.FabzzzTutorialIsland.Util.Areas;
 import fabzzz.scripts.FabzzzTutorialIsland.tasks.*;
+import fabzzz.scripts.FabzzzTutorialIsland.tasks.Dungeon.Combat.*;
+import fabzzz.scripts.FabzzzTutorialIsland.tasks.Dungeon.MiningSmithing.DungeonMiningSmelting;
+import fabzzz.scripts.FabzzzTutorialIsland.tasks.Dungeon.MiningSmithing.DungeonSmithing;
 import fabzzz.scripts.FabzzzTutorialIsland.tasks.Prayer;
 import fabzzz.scripts.FabzzzTutorialIsland.tasks.Quests;
 import fabzzz.scripts.FabzzzTutorialIsland.tasks.Walking.*;
-import org.powbot.api.Condition;
-import org.powbot.api.rt4.*;
-import org.powbot.api.rt4.walking.model.Skill;
+import org.powbot.api.rt4.Chat;
+import org.powbot.api.rt4.ChatOption;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
@@ -14,8 +15,6 @@ import org.powbot.mobile.service.ScriptUploader;
 
 import java.util.ArrayList;
 
-import static fabzzz.scripts.FabzzzTutorialIsland.Util.Areas.BETWEEN_FISH_GATE_COOKING_DOOR;
-import static fabzzz.scripts.FabzzzTutorialIsland.Util.Areas.FISHING_CONTINUE_GATE_SPOT;
 import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
 
@@ -58,7 +57,7 @@ public class FabTutorialIsland extends AbstractScript
     public static String status = "";
 
     public static void main(String[] args) {
-            new ScriptUploader().uploadAndStart("FAB Tutorial island", "Freek", "127.0.0.1:5585", true, false);
+            new ScriptUploader().uploadAndStart("FAB Tutorial island", "Freek", "127.0.0.1:5555", true, false);
         }
 
 
@@ -94,8 +93,16 @@ public class FabTutorialIsland extends AbstractScript
         tasklist.add(new Cooking());
         tasklist.add(new GoInsideQuestBuilding());
         tasklist.add(new Quests());
-        tasklist.add(new DungeonMiningSmithing());
-        tasklist.add(new DungeonCombat());
+
+        tasklist.add(new DungeonSmithing());
+        tasklist.add(new DungeonMiningSmelting());
+
+        tasklist.add(new AccessEquipment());
+        tasklist.add(new DaggerHolding());
+        tasklist.add(new RatFightMelee());
+        tasklist.add(new RatFightRange());
+        tasklist.add(new MoveAndClimbUpLadder());
+
         tasklist.add(new GoInsideBankBuilding());
         tasklist.add(new Banking());
         tasklist.add(new GoInsidePrayerBuilding());

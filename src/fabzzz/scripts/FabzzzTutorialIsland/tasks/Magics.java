@@ -78,17 +78,14 @@ public class Magics extends Task
                 TalkToNpc("Magic Instructor");
                 ContinueChat();
 
-                if(Chat.INSTANCE.optionBarComponent().visible())
-                {
-                    System.out.println("Chat click -> Yes");
-                    Chat.stream().textContains("Yes").first().select();
-                }
+                System.out.println("Chat click -> Yes");
+                Chat.stream().textContains("Yes").first().select();
+
                 ContinueChat();
-                if(Chat.INSTANCE.optionBarComponent().visible())
-                {
-                    System.out.println("Chat click -> No, I'm not planning to do that.");
-                    Chat.stream().textContains("No, I'm not planning to do that.").first().select();
-                }
+
+                System.out.println("Chat click -> No, I'm not planning to do that.");
+                Chat.stream().textContains("No, I'm not planning to do that.").first().select();
+
                 ContinueChat();
             }
         }

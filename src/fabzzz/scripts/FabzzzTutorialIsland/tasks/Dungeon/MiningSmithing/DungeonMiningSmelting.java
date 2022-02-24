@@ -1,4 +1,4 @@
-package fabzzz.scripts.FabzzzTutorialIsland.tasks;
+package fabzzz.scripts.FabzzzTutorialIsland.tasks.Dungeon.MiningSmithing;
 
 import fabzzz.scripts.FabzzzTutorialIsland.Task;
 import fabzzz.scripts.FabzzzTutorialIsland.Util.Areas;
@@ -7,20 +7,22 @@ import org.powbot.api.rt4.*;
 import org.powbot.api.rt4.walking.model.Skill;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import static fabzzz.scripts.FabzzzTutorialIsland.Util.Configurations.*;
 
-public class DungeonMiningSmithing extends Task
+public class DungeonMiningSmelting extends Task
 {
-    private static final int GATE_ID = 9717; //can also be 9719 (random choose 1? )
     private static final int TIN_ORE_ID = 10080;
     private static final int COPPER_ORE_ID = 10079;
-    private static final int SMITHING_MENU_ID = 312;
-    private static final int BRONZE_DAGGER_ID = 1205;
+    private static final List<String> CHATCONTAINS = Arrays.asList("Next let's get you a weapon,","It's quite simple really. To mine a rock,","You manage to mine some tin.","you just need some copper","You manage to mine some copper","You now have some tin ore and some copper ore.","You've made a bronze bar!");
+
     @Override
     public boolean activate()
     {
         System.out.println("DungeonMiningSmithing -> activate");
-        return Areas.DUNGEON_MINING_SMITHING_AREA.contains(Players.local().tile());
+        return Areas.DUNGEON_MINING_SMITHING_AREA.contains(Players.local().tile()) && AnyOfMultipleChatsContains(CHATCONTAINS);
     }
 
     @Override
@@ -59,7 +61,6 @@ public class DungeonMiningSmithing extends Task
             {
                 Camera.turnTo(tinOre);
             }
-
         }
         else if(ChatContains("You manage to mine some tin."))
         {
@@ -90,7 +91,7 @@ public class DungeonMiningSmithing extends Task
         }
         else if(ChatContains("You now have some tin ore and some copper ore."))
         {
-            GameObject furnace = Objects.stream().name("Furnace").first();
+            GameObject furnace = Objects.stream().name("Furnace").nearest().first();
             if(furnace.inViewport())
             {
                 var currentSmithingXp = Skill.Smithing.experience();
@@ -112,79 +113,10 @@ public class DungeonMiningSmithing extends Task
             PlayerIsMoving(30);
             ContinueChat();
         }
-        else if(ChatContains("To smith you'll need a hammer and enough metal bars") || ChatContains("Use an anvil to open the smithing menu,"))
-        {
-            GameObject anvil = Objects.stream().name("Anvil").nearest().first();
-            if(anvil.inViewport() && anvil.interact("Smith", "Anvil"))
-            {
-                if(Condition.wait(() -> Players.local().inMotion(), 15, 20)) // check if walking to anvil
-                {
-                    Condition.wait(() -> Components.stream(SMITHING_MENU_ID).textContains("Dagger").viewable().isNotEmpty(), 100, 60); // we are walking to anvil
-                }
-            }
-            else
-            {
-                Camera.turnTo(anvil);
-            }
-        }
-        else if(ChatContains("Now you have the smithing menu open,"))
-        {
-            if(Components.stream(SMITHING_MENU_ID).textContains("Dagger").viewable().isNotEmpty())
-            {
-
-                System.out.println("Text contains dagger found! clicking dagger");
-                Components.stream().widget(SMITHING_MENU_ID).textContains("Dagger").first().click();
-                Condition.wait(() -> Inventory.stream().id(BRONZE_DAGGER_ID).isNotEmpty(), 100, 100);
-            }
-            else
-            {
-                GameObject anvil = Objects.stream().name("Anvil").nearest().first();
-                if(anvil.inViewport() && anvil.interact("Smith", "Anvil"))
-                {
-                    if(Condition.wait(() -> Players.local().inMotion(), 15, 20)) // check if walking to anvil
-                    {
-                        Condition.wait(() -> Components.stream(SMITHING_MENU_ID).textContains("Dagger").viewable().isNotEmpty(), 100, 60); // we are walking to anvil
-                    }
-                }
-                else
-                {
-                    Camera.turnTo(anvil);
-                }
-            }
-        }
-        else if(ChatContains("Congratulations, you've made your first weapon"))
-        {
-            if(Areas.DUNGEON_DOOR.contains(Players.local().tile()))
-            {
-                System.out.println("Clicking on the gate");
-                var ladder = Objects.stream().id(GATE_ID).nearest().first();
-                if(ladder.interact("Open", "Gate") && ladder.inViewport())
-                {
-                    if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
-                    {
-                        Condition.wait(() -> Areas.DUNGEON_COMBAT_AREA.contains(Players.local().tile()), 100, 20);
-                    }
-                }
-                else
-                {
-                    Camera.turnTo(ladder);
-                }
-
-            }
-            else
-            {
-                Movement.moveTo(Areas.DUNGEON_DOOR.getRandomTile());
-                if(Condition.wait(() -> Players.local().inMotion(), 15, 20))
-                {
-                    Condition.wait(() -> Areas.DUNGEON_DOOR.contains(Players.local().tile()), 100, 10);
-                }
-            }
-        }
-
     }
     @Override
     public String status()
     {
-        return "Dungeon mining/smithing part";
+        return "Dungeon mining/smelting part";
     }
 }

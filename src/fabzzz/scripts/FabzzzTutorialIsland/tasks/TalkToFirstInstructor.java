@@ -24,16 +24,16 @@ public class TalkToFirstInstructor extends Task
         {
             TalkToNpc("Gielinor Guide");
             ContinueChat();
-            if(Chat.INSTANCE.optionBarComponent().visible())
-            {
-                System.out.println("Chat send input 1");
+//            if(Chat.INSTANCE.optionBarComponent().visible())
+//            {
+               // System.out.println("Chat send input 1");
                 if(Chat.stream().textContains("I am an experienced player.").isNotEmpty())
                 {
                     System.out.println("Clicking on option");
                     Chat.stream().textContains("I am an experienced player.").first().select();
                 }
                 ContinueChat();
-            }
+           // }
         }
         else if(ChatContains("Please tap on the flashing spanner icon found on the right side of your screen"))
         {

@@ -45,14 +45,17 @@ public class SetAppearance extends Task
 
         for (var designElement : CharacterDesign.values())
         {
+            System.out.println("in designelement for loop");
             if(designElement.getName().equals("Jaw") && IS_FEMALE)
             {
                 System.out.println("Skipping 'JAW' because we are a female");
                 continue;
             }
             var arrowRightInAppearance = Widgets.widget(APPEARENCE_MENU_WIDGET).component(designElement.getArrowRight());
-            if(arrowRightInAppearance.visible())
+
+            if(Condition.wait(() -> arrowRightInAppearance.visible(), 50, 20))
             {
+                System.out.println("Inside if...");
                 int randomIntBelow10 = r.nextInt(10);
                 for (int amountToClick = 0; amountToClick < randomIntBelow10; amountToClick++)
                 {
@@ -69,6 +72,8 @@ public class SetAppearance extends Task
                 Condition.wait(() -> Components.stream().widget(TEXT_SCREEN).textContains("Getting started").isNotEmpty(), 100, 80);
             }
         }
+
+
 
     }
 
